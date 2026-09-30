@@ -112,14 +112,13 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git checkout -b "$branch"
+          git checkout -b "$branch" 2>/dev/null || git checkout "$branch"
           git add example-app/package.json example-app/package-lock.json
-          git commit -m "chore: update example app to ${package_version}"
-          git push --set-upstream origin "$branch"
-
+          git commit -m "chore: update example app to ${package_version}" || echo "No changes to commit"
+          git push --set-upstream origin "$branch" --force-with-lease
           gh pr create \
             --base "${{ github.event.repository.default_branch }}" \
             --head "$branch" \
             --title "chore: update example app to ${package_version}" \
-            --body "Updates the example app to react-native-multicolumn-modal-picker ${package_version}."
+            --body "Updates the example app to react-native-multicolumn-modal-picker ${package_version}." \
+            || echo "Pull request already exists."
