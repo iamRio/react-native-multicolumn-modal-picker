@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import MultiColumnModalPicker from "react-native-multicolumn-modal-picker";
+import AndroidPickerNotice from "./android-picker-notice";
 import { commonStyles } from "../styles/common";
 
 const destinations = [
@@ -16,12 +23,20 @@ const destinations = [
 
 const SingleColumnWithSearchExample = () => {
   const [visible, setVisible] = useState(false);
+  const [androidNoticeVisible, setAndroidNoticeVisible] = useState(false);
   const [destinationCode, setDestinationCode] = useState("CDG");
   const [lastAction, setLastAction] = useState("Ready to explore");
   const [isSearching, setIsSearching] = useState(false);
   const selectedDestination = destinations.find(
     (item) => item.value === destinationCode,
   );
+  const handleOpenPicker = () => {
+    if (Platform.OS === "android") {
+      setAndroidNoticeVisible(true);
+      return;
+    }
+    setVisible(true);
+  };
 
   return (
     <View style={[commonStyles.exampleItem, styles.card]}>
@@ -54,7 +69,7 @@ const SingleColumnWithSearchExample = () => {
         <Text style={styles.destinationCode}>{destinationCode}</Text>
       </View>
       <TouchableOpacity
-        onPress={() => setVisible(true)}
+        onPress={handleOpenPicker}
         style={styles.openButton}
         activeOpacity={0.8}
       >
@@ -97,6 +112,11 @@ const SingleColumnWithSearchExample = () => {
         onAccept={() => setLastAction("Destination selected just now")}
         onCancel={() => setLastAction("Selection kept")}
         onClose={() => setVisible(false)}
+      />
+      <AndroidPickerNotice
+        visible={androidNoticeVisible}
+        onClose={() => setAndroidNoticeVisible(false)}
+        tone="travel"
       />
     </View>
   );

@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import MultiColumnModalPicker from "react-native-multicolumn-modal-picker";
+import AndroidPickerNotice from "./android-picker-notice";
 import { commonStyles } from "../styles/common";
 
 const plans = [
@@ -21,6 +28,7 @@ const billingCycles = [
 
 const MultiColumnsExample = () => {
   const [visible, setVisible] = useState(false);
+  const [androidNoticeVisible, setAndroidNoticeVisible] = useState(false);
   const [plan, setPlan] = useState("creator");
   const [billingCycle, setBillingCycle] = useState("yearly");
   const [lastAction, setLastAction] = useState("Ready to choose");
@@ -28,6 +36,13 @@ const MultiColumnsExample = () => {
   const selectedBillingCycle = billingCycles.find(
     (item) => item.value === billingCycle,
   );
+  const handleOpenPicker = () => {
+    if (Platform.OS === "android") {
+      setAndroidNoticeVisible(true);
+      return;
+    }
+    setVisible(true);
+  };
 
   return (
     <View style={[commonStyles.exampleItem, styles.card]}>
@@ -56,7 +71,7 @@ const MultiColumnsExample = () => {
         </View>
       </View>
       <TouchableOpacity
-        onPress={() => setVisible(true)}
+        onPress={handleOpenPicker}
         style={styles.openButton}
         activeOpacity={0.8}
       >
@@ -107,6 +122,11 @@ const MultiColumnsExample = () => {
         onAccept={() => setLastAction("Plan updated just now")}
         onCancel={() => setLastAction("Selection kept")}
         onClose={() => setVisible(false)}
+      />
+      <AndroidPickerNotice
+        visible={androidNoticeVisible}
+        onClose={() => setAndroidNoticeVisible(false)}
+        tone="night"
       />
     </View>
   );

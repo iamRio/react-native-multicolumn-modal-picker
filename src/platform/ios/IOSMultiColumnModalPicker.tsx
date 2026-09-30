@@ -97,6 +97,8 @@ const IOSMultiColumnModalPicker = ({
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
   const { height: windowHeight } = useWindowDimensions();
+  const windowHeightRef = useRef(windowHeight);
+  windowHeightRef.current = windowHeight;
 
   const legacyColorOverrides = useMemo(
     () => ({
@@ -179,7 +181,7 @@ const IOSMultiColumnModalPicker = ({
 
     if (visible) {
       setModalVisible(true);
-      pickerTranslateY.setValue(windowHeight);
+      pickerTranslateY.setValue(windowHeightRef.current);
       Animated.timing(overlayOpacity, {
         toValue: 1,
         duration: 220,
@@ -198,7 +200,7 @@ const IOSMultiColumnModalPicker = ({
           useNativeDriver: true,
         }),
         Animated.timing(pickerTranslateY, {
-          toValue: windowHeight,
+          toValue: windowHeightRef.current,
           duration: 180,
           useNativeDriver: true,
         }),
@@ -214,7 +216,7 @@ const IOSMultiColumnModalPicker = ({
       overlayOpacity.stopAnimation();
       pickerTranslateY.stopAnimation();
     };
-  }, [overlayOpacity, pickerTranslateY, visible, windowHeight]);
+  }, [overlayOpacity, pickerTranslateY, visible]);
 
   const columns = useMemo<[PickerColumn, PickerColumn?, PickerColumn?]>(
     () => [column1, column2, column3],

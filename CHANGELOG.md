@@ -1,15 +1,23 @@
 # Changelog
 
+## [1.1.2] - 2026-09-22
+
+### Changed
+
+- Set the minimum supported peer dependency versions to `@react-native-picker/picker >=2.4.10`, React `>=18.2.0`, React Native `>=0.72.10`, and `react-native-safe-area-context >=4.6.3`.
+- Set the minimum supported Expo SDK version to 49 (`expo ~49.0.23`).
+
+### Fixed
+
+- Improved the modal closing animation and reduced visual flickering during dismissal.
+
 ## [1.1.1] - 2026-09-22
 
-### Highlights
+### Added (1.1.1)
 
 - Standardized API names with full TypeScript support and backward-compatible deprecated aliases.
 - Added built-in localized defaults, custom themes, flexible styling options, and a native-driver modal overlay.
 - Added `react-native-safe-area-context` as a peer dependency for safe-area layout handling.
-
-### Added
-
 - Exported TypeScript types and helper definitions for the public picker API.
 - Built-in UI text translations via the `locale` prop for 29 supported languages, including automatic device detection for Norwegian Nynorsk (`nn`) normalized to `nb`.
 - A centralized theming model built around `theme` and `customColorScheme` for clean palette configuration.
@@ -20,7 +28,7 @@
 - Added configurable border-radius properties for the modal, search bar, search clear button, and action buttons (all defaulting to `10`).
 - Kept the selected-value highlight inactive for now; its compatibility props remain available but have no visible effect.
 
-### Changed
+### Changed (1.1.1)
 
 - Preserved backward compatibility for legacy aliases while introducing the new theming and localization API.
 - Updated documentation and reference examples for multi-column pickers and theme-aware search flows.
@@ -29,7 +37,7 @@
 - Improved search reliability with case- and accent-insensitive matching and proper selection state restoration.
 - Refined multi-column rendering and fixed lifecycle callback order for cancellation actions.
 
-### Deprecated
+### Deprecated (1.1.1)
 
 The following props still work for compatibility, but they were deprecated in `1.1.1` and will be removed in a future major version:
 
@@ -44,17 +52,17 @@ The following props still work for compatibility, but they were deprecated in `1
 - `onValueChange1`, `onValueChange2`, `onValueChange3` -> `onValueChange`
 - `onValuesChange` -> `onValueChange`
 
-### Removed
+### Removed (1.1.1)
 
 - Removed the runtime `prop-types` dependency in favor of native TypeScript definitions.
 
-### Migration note
+### Notes (1.1.1)
 
 Legacy aliases from 1.0.x remain supported as deprecated compatibility shims. New projects should use the current prop names, explicit text overrides for custom localizations, and `theme` + `customColorScheme` for styling. See the [README](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/README.md) for migration details.
 
 ## [1.0.9] - 2023-11-07
 
-### Changes (1.0.9)
+### Changed (1.0.9)
 
 - Adjustments were made to improve compatibility and performance.
 
@@ -74,23 +82,21 @@ Legacy aliases from 1.0.x remain supported as deprecated compatibility shims. Ne
 
 ## [1.0.7] - 2023-10-30
 
-### Changes (1.0.7)
+### Changed (1.0.7)
 
 - The dependency `@react-native-picker/picker` has been moved to peerDependencies to enhance the flexibility of the package, allowing compatibility with any version of `@react-native-picker/picker`. This gives users greater control over dependency versions. Additionally, if `npm v7` or higher is used, `@react-native-picker/picker` will automatically install if it is not present in the project, simplifying dependency management.
+
+### Notes (1.0.7)
 
 - Documentation was improved.
 
 ## [1.0.6] - 2023-10-26
 
-### Notes (1.0.6)
+### Fixed (1.0.6)
 
-- Significant bug from version `1.0.5` has been fixed.
+- Fixed a significant bug introduced in `1.0.5`.
 
 ## [1.0.5] - 2023-10-26
-
-### Changes (1.0.5)
-
-- Performance adjustments and minor corrections.
 
 ### Added (1.0.5)
 
@@ -98,8 +104,9 @@ Legacy aliases from 1.0.x remain supported as deprecated compatibility shims. Ne
 - New property `actionButtonsBorderColor` has been added. This property allows you to set the border color of the action buttons.
 - `prop-types` dependency for runtime prop type validation, enhancing error detection and code quality. It also eases component implementation by providing autocomplete with a brief description of each prop and its data type.
 
-### Modified (1.0.5)
+### Changed (1.0.5)
 
+- Performance adjustments and minor corrections.
 - The property name `extraView` has been changed to `hPadding` for improved clarity and consistency in property naming.
 - Property `searchPlaceholderTextColor` has been changed to `searchElementsColor`. The new property `searchElementsColor`, in addition to defining the color of the search bar placeholder, also defines the color of the clear button in the search bar.
 - Improved the performance of the search bar focus and blur animations in the selector by using the native driver. This change provides a smoother animation experience.
@@ -108,19 +115,13 @@ Legacy aliases from 1.0.x remain supported as deprecated compatibility shims. Ne
 
 - The `showActionButtons` and `showCancelButton` properties have been removed. The functionality of these properties has been absorbed by the new `actionButtons` property.
 
-### Package Experience Enhancements (1.0.5)
-
-- New `postinstall` message in `package.json`.
-- New “Do you like our package?” section in the documentation.
-- Changelog is now located in `CHANGELOG.md` and referenced in the package documentation.
-
 ### Notes (1.0.5)
 
-These changes provide more flexibility in controlling the visibility and position of the action buttons, making it easier to customize the user interface according to your needs.
+- The release introduces the new `actionButtons` API and updates the naming of related props for a clearer and more consistent public interface.
 
 ## [1.0.4] - 2023-10-22
 
-### Changes (1.0.4)
+### Changed (1.0.4)
 
 - Discontinued support for versions prior to `1.0.4`. Developers are encouraged to update to the latest version. Thanks for understanding.
 - Limited package use to `iOS` only. This decision was made to prevent potential errors and dissatisfaction for developers using the package for `Android` applications. For more details see the [README](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/README.md).
@@ -131,7 +132,7 @@ These changes provide more flexibility in controlling the visibility and positio
 - Implemented the search bar in the selector. See the [current README](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/README.md) for the current search API.
 - Added search and styling properties for the selector.
 
-### Modified (1.0.4)
+### Changed (1.0.4) - naming updates
 
 - The property name `highlightSelectionColor` has been changed to `selectionHighlightColor` for improved clarity and consistency in property naming.
 
@@ -141,7 +142,7 @@ These changes provide more flexibility in controlling the visibility and positio
 
 ## [1.0.3] - 2023-10-17
 
-### Changes (1.0.3)
+### Changed (1.0.3)
 
 - Minor bug fixes were made.
 - Adjustments were made to improve compatibility and performance.
@@ -149,7 +150,7 @@ These changes provide more flexibility in controlling the visibility and positio
 
 ## [1.0.2] - 2023-10-17
 
-### Changes (1.0.2)
+### Changed (1.0.2)
 
 - Minor bug fixes were made.
 - Adjustments were made to improve compatibility and performance.
@@ -157,7 +158,7 @@ These changes provide more flexibility in controlling the visibility and positio
 
 ## [1.0.1] - 2023-10-16
 
-### Changes (1.0.1)
+### Changed (1.0.1)
 
 - Minor bug fixes were made.
 - Adjustments were made to improve compatibility and performance.
@@ -171,8 +172,6 @@ These changes provide more flexibility in controlling the visibility and positio
 - Inclusion of the dependency ‘@react-native-picker/picker’ which is automatically installed with my package.
 - Compatibility with existing React Native projects, whether you’re using ‘Expo’ or pure ‘React Native’.
 
-## Do you like this package?
+### Support
 
-Thank you for using my package! Your support is greatly appreciated and it motivates me to continue improving and adding new features. If you find it useful, please consider giving it a :star: on GitHub. This lets me know that I’m on the right track and encourages me to keep going.
-
-[Give it a star!](https://github.com/iamRio/react-native-multicolumn-modal-picker)
+Thank you for using this package. If you find it useful, please consider giving it a [star on GitHub](https://github.com/iamRio/react-native-multicolumn-modal-picker). Your support helps motivate continued development and new features.

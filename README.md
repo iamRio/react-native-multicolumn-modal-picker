@@ -5,7 +5,10 @@
 [![platform](https://img.shields.io/badge/platform-iOS-lightgrey)](https://github.com/iamRio/react-native-multicolumn-modal-picker)
 [![license](https://img.shields.io/npm/l/react-native-multicolumn-modal-picker)](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/LICENSE)
 
-## A flexible React Native modal picker with up to three configurable columns, optional single-column search, customizable actions and styling, and localized default text
+A flexible React Native modal picker with up to three configurable columns, optional single-column search, custom themes, and localized default text.
+
+<!-- markdownlint-disable MD033 -->
+<img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/twoColumnSelector.gif" alt="Two-column picker" height="220" />
 
 ## Features
 
@@ -18,10 +21,10 @@
 
 ## Requirements
 
-- React `>=16.8.0`
-- React Native `>=0.62.0`
-- `@react-native-picker/picker` `>=2.0.0`
-- `react-native-safe-area-context` `>=4.0.0`
+- React `>=18.2.0`
+- React Native `>=0.72.10`
+- `@react-native-picker/picker` `>=2.4.10`
+- `react-native-safe-area-context` `>=4.6.3`
 - iOS (Android support in development)
 
 ## Installation
@@ -36,7 +39,9 @@ or:
 yarn add react-native-multicolumn-modal-picker
 ```
 
-For Expo projects:
+### For Expo projects
+
+The package supports Expo SDK 49 and later. This applies only to Expo projects; bare React Native projects do not require Expo.
 
 ```bash
 npx expo install react-native-multicolumn-modal-picker @react-native-picker/picker react-native-safe-area-context
@@ -56,9 +61,8 @@ Try the package in the included example app:
 
 <!-- markdownlint-disable MD033 -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/singleColumnSelector.gif" alt="Single-column picker" height="400" />
-  <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/twoColumnSelector.gif" alt="Two-column picker" height="400" />
-  <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/singleColumnSelectorSearchBar.gif" alt="Single-column picker with search" height="400" />
+  <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/singleColumnSelector.gif" alt="Single-column picker" height="400" style="margin: 5px;"/>
+  <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/singleColumnSelectorSearchBar.gif" alt="Single-column picker with search" height="400" style="margin: 5px;"/>
 </p>
 
 ## Usage
@@ -376,7 +380,7 @@ The package exports `MultiColumnModalPickerProps`, `PickerLocale`, `PickerValue`
 
 For the complete version history, see [CHANGELOG.md](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/CHANGELOG.md).
 
-## Contributing
+## Feedback
 
 Please open an [issue](https://github.com/iamRio/react-native-multicolumn-modal-picker/issues) or join the [discussion](https://github.com/iamRio/react-native-multicolumn-modal-picker/discussions/1).
 
