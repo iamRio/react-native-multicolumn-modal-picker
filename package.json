@@ -1,9 +1,9 @@
 {
   "name": "react-native-multicolumn-modal-picker",
-  "version": "1.1.2",
-  "description": "A customizable multi-column modal picker for React Native iOS, supporting up to 3 selection columns.",
+  "version": "1.2.0",
+  "description": "A highly customizable multi-column modal picker for React Native (Android, iOS, and Web).",
   "license": "MIT",
-  "author": "Marcos A. Del Río Rodríguez <marcosdelrio.dev@email.com>",
+  "author": "Marcos A. Del Río Rodríguez <marcosdelrio.dev@gmail.com>",
   "type": "commonjs",
   "sideEffects": false,
   "main": "dist/index.js",
@@ -40,6 +40,10 @@
     "modal-selector",
     "ios-picker",
     "ios-selector",
+    "android-picker",
+    "android-selector",
+    "web-picker",
+    "web-selector",
     "multi-column",
     "multicolumn",
     "multi-column-picker",
@@ -66,19 +70,35 @@
     "format:check": "npx --yes prettier --check .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "npx --yes oxlint src",
-    "validate": "npm run format:check && npm run typecheck && npm run lint",
+    "validate": "npm run format && npm run typecheck && npm run lint",
     "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.json",
-    "example:local": "npm run build && npm pack && npm install --prefix example-app ./react-native-multicolumn-modal-picker-1.1.2.tgz --no-save --package-lock=false --ignore-scripts && npm --prefix example-app start",
-    "example:restore": "npm install --prefix example-app --ignore-scripts"
+    "fores-play:local:prepare": "npm --prefix ../fores-play run package:local:install",
+    "fores-play:local:start": "npm run fores-play:local:prepare && npm --prefix ../fores-play start",
+    "fores-play:local:web": "npm run fores-play:local:prepare && npm --prefix ../fores-play run web",
+    "fores-play:local:android": "npm run fores-play:local:prepare && npm --prefix ../fores-play run prebuild:android && npm --prefix ../fores-play run android",
+    "fores-play:local:ios": "npm run fores-play:local:prepare && npm --prefix ../fores-play run ios"
   },
-  "dependencies": {},
   "peerDependencies": {
     "@react-native-picker/picker": ">=2.4.10",
     "react": ">=18.2.0",
+    "react-dom": ">=18.2.0",
     "react-native": ">=0.72.10",
-    "react-native-safe-area-context": ">=4.6.3"
+    "react-native-safe-area-context": ">=4.6.3",
+    "react-native-web": ">=0.19.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-picker/picker": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "react-native-web": {
+      "optional": true
+    }
   },
   "devDependencies": {
+    "@react-native-picker/picker": "^2.11.4",
     "@types/react": "^19.3.0",
     "react": "^19.3.0",
     "react-native": "^0.87.1",

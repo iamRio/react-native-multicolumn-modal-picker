@@ -1,9 +1,10 @@
-import type { PickerPalette, PickerThemeName } from "../types";
-
-type BasePalette = Omit<PickerPalette, "searchElements" | "cancelText">;
-
-type ThemePalette = BasePalette &
-  Pick<PickerPalette, "searchElements" | "cancelText">;
+import type {
+  BasePalette,
+  PickerPalette,
+  ResolvePaletteOptions,
+  ThemePalette,
+} from "../types";
+import { pickerTokens } from "./tokens";
 
 export const Colors: Readonly<{
   light: BasePalette;
@@ -11,37 +12,39 @@ export const Colors: Readonly<{
 }> &
   Pick<PickerPalette, "searchElements" | "cancelText"> = {
   light: {
-    modalBackground: "#F6F6F6",
-    overlay: "rgba(0, 0, 0, 0.42)",
-    border: "#BBBBBB",
-    buttonText: "#444444",
-    cancelButtonText: "#555555",
-    secondaryText: "#888888",
-    rightInfoText: "#444444",
-    inputText: "#222222",
-    pickerItemText: "#222222",
-    selectionHighlight: "#999999",
-    searchBackground: "rgba(1,1,1,0.1)",
-    searchClearBackground: "rgba(1,1,1,0.5)",
-    searchClearText: "rgba(255,255,255,0.3)",
+    modalBackground: pickerTokens.color.light.modalBackground,
+    overlay: pickerTokens.color.light.overlay,
+    border: pickerTokens.color.light.border,
+    buttonText: pickerTokens.color.light.buttonText,
+    columnNavigationButtons: pickerTokens.color.light.columnNavigationButtons,
+    cancelButtonText: pickerTokens.color.light.cancelButtonText,
+    secondaryText: pickerTokens.color.light.secondaryText,
+    rightInfoText: pickerTokens.color.light.buttonText,
+    inputText: pickerTokens.color.light.inputText,
+    pickerItemText: pickerTokens.color.light.inputText,
+    selectionHighlight: pickerTokens.color.light.selectionHighlight,
+    searchBackground: pickerTokens.color.light.searchBackground,
+    searchClearBackground: pickerTokens.color.light.searchClearBackground,
+    searchClearText: pickerTokens.color.light.searchClearText,
   },
   dark: {
-    modalBackground: "#333333",
-    overlay: "rgba(0, 0, 0, 0.58)",
-    border: "#717171",
-    buttonText: "#FFFFFF",
-    cancelButtonText: "#FFFFFF",
-    secondaryText: "#B2B2B2",
-    rightInfoText: "#B2B2B2",
-    inputText: "#FFFFFF",
-    pickerItemText: "#FFFFFF",
-    selectionHighlight: "#555555",
-    searchBackground: "rgba(222,222,222,0.1)",
-    searchClearBackground: "rgba(255,255,255,0.5)",
-    searchClearText: "rgba(1,1,1,0.3)",
+    modalBackground: pickerTokens.color.dark.modalBackground,
+    overlay: pickerTokens.color.dark.overlay,
+    border: pickerTokens.color.dark.border,
+    buttonText: pickerTokens.color.dark.inputText,
+    columnNavigationButtons: pickerTokens.color.dark.columnNavigationButtons,
+    cancelButtonText: pickerTokens.color.dark.inputText,
+    secondaryText: pickerTokens.color.dark.secondaryText,
+    rightInfoText: pickerTokens.color.dark.secondaryText,
+    inputText: pickerTokens.color.dark.inputText,
+    pickerItemText: pickerTokens.color.dark.inputText,
+    selectionHighlight: pickerTokens.color.dark.selectionHighlight,
+    searchBackground: pickerTokens.color.dark.searchBackground,
+    searchClearBackground: pickerTokens.color.dark.searchClearBackground,
+    searchClearText: pickerTokens.color.dark.searchClearText,
   },
-  searchElements: "#B7B7B7",
-  cancelText: "#FF4D4F",
+  searchElements: pickerTokens.color.searchElements,
+  cancelText: pickerTokens.color.cancelText,
 } as const;
 
 const omitUndefined = <T extends object>(value: T): Partial<T> =>
@@ -54,12 +57,7 @@ export const resolvePalette = ({
   customColorScheme,
   colorScheme,
   legacyColorOverrides,
-}: {
-  theme?: PickerThemeName;
-  customColorScheme?: Partial<Record<string, Partial<PickerPalette>>>;
-  colorScheme?: "light" | "dark" | null;
-  legacyColorOverrides?: Partial<PickerPalette>;
-}): PickerPalette => {
+}: ResolvePaletteOptions): PickerPalette => {
   const resolvedThemeName: string =
     theme === "auto"
       ? colorScheme === "dark"
@@ -74,10 +72,11 @@ export const resolvePalette = ({
         ? "dark"
         : "light";
 
-  const selectedThemeOverrides =
-    customColorScheme?.[resolvedThemeName] ??
-    customColorScheme?.[basePaletteName] ??
-    {};
+  const baseThemeOverrides = customColorScheme?.[basePaletteName] ?? {};
+  const namedThemeOverrides =
+    resolvedThemeName === basePaletteName
+      ? {}
+      : (customColorScheme?.[resolvedThemeName] ?? {});
 
   const basePalette: BasePalette = Colors[basePaletteName];
 
@@ -86,6 +85,7 @@ export const resolvePalette = ({
     searchElements: Colors.searchElements,
     cancelText: Colors.cancelText,
     ...omitUndefined(legacyColorOverrides ?? {}),
-    ...omitUndefined(selectedThemeOverrides),
+    ...omitUndefined(baseThemeOverrides),
+    ...omitUndefined(namedThemeOverrides),
   } satisfies ThemePalette;
 };

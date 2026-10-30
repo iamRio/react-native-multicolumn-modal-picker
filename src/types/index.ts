@@ -1,5 +1,12 @@
+import type { ComponentRef, RefObject } from "react";
+import type {
+  Animated,
+  StyleProp,
+  TextInput as TextInputComponent,
+  TextStyle,
+  ViewStyle,
+} from "react-native";
 import type { ReactNode } from "react";
-import type { StyleProp, TextStyle, ViewStyle } from "react-native";
 
 export type PickerValue = string | number;
 
@@ -41,7 +48,11 @@ export type PickerLocale =
   | "sk"
   | "vi";
 
-export type ActionButtonsPosition = "top" | "bottom" | "cancel" | "none";
+/** @deprecated Use "bottom" with `showSubmitButton={false}` instead. */
+export type DeprecatedCancelActionButtonsPosition = "cancel";
+
+export type ActionButtonsPosition =
+  "top" | "bottom" | "none" | DeprecatedCancelActionButtonsPosition;
 
 export type PickerThemeMode = "light" | "dark" | "auto";
 
@@ -52,6 +63,7 @@ export type PickerPalette = {
   overlay: string;
   border: string;
   buttonText: string;
+  columnNavigationButtons: string;
   cancelButtonText: string;
   secondaryText: string;
   rightInfoText: string;
@@ -64,6 +76,11 @@ export type PickerPalette = {
   selectionHighlight: string;
   cancelText: string;
 };
+
+export type BasePalette = Omit<PickerPalette, "searchElements" | "cancelText">;
+
+export type ThemePalette = BasePalette &
+  Pick<PickerPalette, "searchElements" | "cancelText">;
 
 export type PickerValueChangeHandler = (
   value: PickerValue | null,
@@ -174,27 +191,62 @@ export type MultiColumnModalPickerProps = {
    */
   onValuesChange?: PickerValuesChangeHandler;
   /**
-   * Text shown on the accept button.
-   *
-   * Type: string.
-   * Default: localized default text. Has no effect when accept actions are not rendered.
+   * @deprecated Since 1.2.0. Use submitButtonText instead. This value is used
+   * only when `submitButtonText` is not provided.
    */
   acceptButtonText?: string;
   /**
-   * Text style for the accept button label.
-   *
-   * Type: StyleProp<TextStyle>.
-   * Default: default button style. Applied only to rendered accept actions.
+   * @deprecated Since 1.2.0. Use submitButtonTextStyle instead. This style is
+   * applied before `submitButtonTextStyle` when both are provided.
    */
   acceptButtonTextStyle?: StyleProp<TextStyle>;
   /**
-   * Position of the action buttons row.
+   * Text shown on the submit button.
    *
-   * `"top"` renders both actions inside the modal, `"bottom"` renders the
-   * accept action inside and the cancel action outside, `"cancel"` renders
-   * only the cancel action outside, and `"none"` renders no action buttons.
+   * Type: string.
+   * Default: localized default text. Has no effect when submit actions are not rendered.
+   */
+  submitButtonText?: string;
+  /**
+   * Text style for the submit button label.
+   *
+   * Type: StyleProp<TextStyle>.
+   * Default: default button style. Applied only to rendered submit actions.
+   */
+  submitButtonTextStyle?: StyleProp<TextStyle>;
+  /**
+   * Style for the submit button's touchable container.
+   *
+   * Type: StyleProp<ViewStyle>.
+   * Default: default button container style. Applied only to rendered submit actions.
+   */
+  submitButtonContainerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Position of the action buttons.
+   *
+   * `"top"` renders visible actions inside the modal, `"bottom"` renders the
+   * submit action inside and the cancel action outside, and `"none"` renders
+   * no action buttons.
+   *
+   * The `"cancel"` value is deprecated but remains supported for compatibility.
+   * Use `"bottom"` with `showSubmitButton={false}` to render only cancel.
    */
   actionButtonsPosition?: ActionButtonsPosition;
+  /**
+   * Whether to render the submit button in the selected action layout.
+   *
+   * Type: boolean.
+   * Default: true. For the deprecated `actionButtonsPosition="cancel"` value,
+   * the button remains hidden by default to preserve its previous behavior.
+   */
+  showSubmitButton?: boolean;
+  /**
+   * Whether to render the cancel button in the selected action layout.
+   *
+   * Type: boolean.
+   * Default: true.
+   */
+  showCancelButton?: boolean;
   /**
    * Border radius applied to action buttons when they are rendered outside the modal.
    * Integrated action buttons keep the modal container radius.
@@ -210,6 +262,13 @@ export type MultiColumnModalPickerProps = {
    * Default: localized default text. Has no effect when cancel actions are not rendered.
    */
   cancelButtonText?: string;
+  /**
+   * Style for the cancel button's touchable container.
+   *
+   * Type: StyleProp<ViewStyle>.
+   * Default: default button container style. Applied only to rendered cancel actions.
+   */
+  cancelButtonContainerStyle?: StyleProp<ViewStyle>;
   /**
    * Text style for the cancel button label.
    *
@@ -244,6 +303,16 @@ export type MultiColumnModalPickerProps = {
    * New column slots take precedence over the corresponding legacy column props.
    */
   columns?: readonly [PickerColumn, PickerColumn?, PickerColumn?];
+  /**
+   * Controls the column navigation buttons. A boolean applies to every column;
+   * a tuple can override each column independently. Undefined values use
+   * automatic detection (shown only on non-touch Web devices).
+   *
+   * Type: boolean | readonly [boolean?, boolean?, boolean?].
+   * Default: automatically hidden except on non-touch Web devices.
+   */
+  showColumnNavigationButtons?:
+    boolean | readonly [boolean?, boolean?, boolean?];
   /**
    * Horizontal padding applied around the picker content.
    * Applied only when its value is defined; otherwise `hPadding` is used as a legacy fallback.
@@ -298,6 +367,13 @@ export type MultiColumnModalPickerProps = {
    * Default: false.
    */
   enableSearch?: boolean;
+  /**
+   * Maximum number of characters allowed in the search input.
+   *
+   * Type: positive integer or null.
+   * Default: 30. Set to null to disable the limit.
+   */
+  searchMaxLength?: number | null;
   /**
    * Called when the rendered search input receives focus.
    *
@@ -405,35 +481,40 @@ export type MultiColumnModalPickerProps = {
   /**
    * Theme name used to select the active palette.
    *
-   * `theme` chooses the base palette. `customColorScheme` applies the final overrides.
-   * Supported built-ins: "auto" | "light" | "dark" and any custom key you defined.
+   * Supported built-ins: "auto" | "light" | "dark" and any custom key you define.
    * When omitted, the active system color scheme selects the light or dark base palette.
    */
   theme?: PickerThemeName;
   /**
    * Custom color schemes keyed by theme name.
    *
-   * This is the final color override layer. Any keys you omit keep the values from the selected base theme.
-   * A custom entry takes effect only when its key matches `theme` or its active light/dark base palette.
+   * Both the theme entries and colors within each entry are optional. Colors
+   * omitted from the active light/dark entry keep their built-in values; when
+   * `theme` is a custom name, its colors override the active light/dark entry.
    */
   customColorScheme?: Partial<Record<string, Partial<PickerPalette>>>;
   /**
    * Locale used for the built-in default texts.
    *
    * See `PickerLocale` for the supported values.
-   * It affects only built-in accept, cancel, and search-placeholder text when
+   * It affects only built-in submit, cancel, and search-placeholder text when
    * the corresponding explicit text prop is not defined.
    */
   locale?: PickerLocale;
   /**
-   * Called when the user confirms the current selection.
+   * @deprecated Since 1.2.0. Use onSubmit instead. Called only when
+   * `onSubmit` is not provided.
+   */
+  onAccept?: () => void;
+  /**
+   * Called when the user submits the current selection.
    *
    * Signature: () => void.
    * Default: none.
    */
-  onAccept?: () => void;
+  onSubmit?: () => void;
   /**
-   * Called when the user cancels without accepting.
+   * Called when the user cancels without submitting.
    *
    * Signature: () => void.
    * Default: none.
@@ -451,4 +532,146 @@ export type MultiColumnModalPickerProps = {
    * The current picker layout does not render this prop.
    */
   children?: ReactNode;
+};
+
+export type DefaultTextSet = {
+  accept: string;
+  cancel: string;
+  searchPlaceholder: string;
+};
+
+export type PickerColumnViewProps = {
+  column: PickerColumn;
+  columnIndex: number;
+  selectedValue: PickerValue | null | undefined;
+  itemStyle?: StyleProp<TextStyle>;
+  itemTextColor: string;
+  columnNavigationButtonsColor: string;
+  pickerHeight: number;
+  isSingleColumn: boolean;
+  showColumnNavigationButtons: boolean;
+  reserveColumnNavigationButtonSpace: boolean;
+  onValueChange?: PickerValueChangeHandler;
+};
+
+export type PickerWheelProps = Omit<
+  PickerColumnViewProps,
+  | "isSingleColumn"
+  | "columnNavigationButtonsColor"
+  | "showColumnNavigationButtons"
+  | "reserveColumnNavigationButtonSpace"
+> & {
+  isSingleColumn?: boolean;
+  scrollEnabled?: boolean;
+  animateSelectedValueChange?: boolean;
+};
+
+export type PickerWheelItemProps = {
+  item: PickerItem;
+  itemIndex: number;
+  selected: boolean;
+  itemHeight: number;
+  scrollOffset: Animated.Value;
+  itemStyle?: StyleProp<TextStyle>;
+  itemTextColor: string;
+};
+
+export type PickerChangeHandler = (
+  value: PickerValue | null,
+  index?: number,
+) => void;
+
+export type PickerColumnsProps = {
+  columns: [PickerColumn, PickerColumn?, PickerColumn?];
+  selectedValues: [
+    PickerValue | null,
+    (PickerValue | null)?,
+    (PickerValue | null)?,
+  ];
+  itemStyle?: StyleProp<TextStyle>;
+  itemTextColor: string;
+  columnNavigationButtonsColor: string;
+  pickerHeight: number;
+  isSingleColumn: boolean;
+  showColumnNavigationButtons: readonly [boolean, boolean, boolean];
+  reserveColumnNavigationButtonSpace: boolean;
+  onValueChanges: [
+    PickerChangeHandler | undefined,
+    PickerChangeHandler | undefined,
+    PickerChangeHandler | undefined,
+  ];
+};
+
+export type SearchBarProps = {
+  backgroundColor: string;
+  clearButtonColor: string;
+  clearTextColor: string;
+  inputColor: string;
+  placeholder: string;
+  placeholderTextColor: string;
+  searchValue: string;
+  searchBarBorderRadius: number;
+  searchClearButtonBorderRadius: number;
+  searchMaxLength: number | null;
+  searchBoxStyle?: StyleProp<ViewStyle>;
+  searchTextStyle?: StyleProp<TextStyle>;
+  inputRef: RefObject<ComponentRef<typeof TextInputComponent> | null>;
+  onChangeText: (text: string) => void;
+  onClear: () => void;
+  onFocus?: () => void;
+  onBlur: () => void;
+};
+
+export type KeyboardTarget = {
+  tagName?: string;
+  isContentEditable?: boolean;
+  parentElement?: KeyboardTarget | null;
+};
+
+export type WebKeyboardEvent = {
+  key: string;
+  altKey: boolean;
+  ctrlKey: boolean;
+  metaKey: boolean;
+  defaultPrevented: boolean;
+  target: KeyboardTarget | null;
+  preventDefault: () => void;
+};
+
+export type WebDocument = {
+  addEventListener: (
+    type: "keydown",
+    listener: (event: WebKeyboardEvent) => void,
+  ) => void;
+  removeEventListener: (
+    type: "keydown",
+    listener: (event: WebKeyboardEvent) => void,
+  ) => void;
+};
+
+export type WebGlobal = typeof globalThis & {
+  document?: WebDocument;
+  window?: {
+    matchMedia?: (query: string) => WebMediaQueryList;
+  };
+};
+
+export type WebMediaQueryList = {
+  matches: boolean;
+  addEventListener?: (type: "change", listener: () => void) => void;
+  removeEventListener?: (type: "change", listener: () => void) => void;
+  addListener?: (listener: () => void) => void;
+  removeListener?: (listener: () => void) => void;
+};
+
+export type PickerItemRenderInfo = {
+  item: PickerItem;
+  index: number;
+};
+
+export type ResolvePaletteOptions = {
+  theme?: PickerThemeName;
+  customColorScheme?: Partial<Record<string, Partial<PickerPalette>>>;
+  colorScheme?: "light" | "dark" | null;
+  legacyColorOverrides?: Partial<PickerPalette>;
 };

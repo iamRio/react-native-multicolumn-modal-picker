@@ -1,13 +1,45 @@
 # Changelog
 
-## [1.1.2] - 2026-09-22
+## [1.2.0] - 2026-10-26
+
+### Added
+
+- Allowed partial color overrides for light, dark, and named themes. Unspecified colors retain the built-in colors for the active mode, and named theme values take precedence when a color is defined in both entries.
+- Added Android support with virtualized scrollable picker wheels that match the existing iOS modal styling.
+- Added Web support, including keyboard arrow navigation for single-column pickers.
+- Optimized picker columns on Android and Web to handle large option lists efficiently.
+- Added `showColumnNavigationButtons` to show or hide column navigation buttons on every platform globally or independently per column. By default, buttons are shown only on non-touch Web devices, based on the `pointer`, `hover`, `any-pointer`, and `any-hover` media features.
+- Added the `columnNavigationButtons` palette color for theming column navigation buttons on every platform.
+- Added `submitButtonText`, `submitButtonTextStyle`, and `onSubmit` as the preferred names for button text, styling, and submission callbacks.
+- Added `showSubmitButton` and `showCancelButton` to control each action independently; both default to `true`.
+- Added `submitButtonContainerStyle` and `cancelButtonContainerStyle` to style each action button's touchable container independently from its label.
+- Added the `searchMaxLength` prop to configure the search input character limit. It defaults to `30`, accepts positive safe integers, and can be set to `null` for no limit.
 
 ### Changed
+
+- When no submit button is rendered, selecting an item in a single-column picker submits the selection and closes the modal. Multi-column pickers remain open; the backdrop submits the current values, while the system back action still cancels.
+- Adapted the modal layout for landscape and tablet-sized screens.
+- Made `@react-native-picker/picker` an optional peer dependency; it is required only for iOS.
+- Updated Expo compatibility to support SDK 58.
+- Updated the package and example documentation to include Android support.
+
+### Deprecated
+
+- Deprecated `actionButtonsPosition="cancel"`. Use `actionButtonsPosition="bottom"` with `showSubmitButton={false}` instead. The old value remains supported with its existing behavior for compatibility.
+- Deprecated `acceptButtonText`, `acceptButtonTextStyle`, and `onAccept`; use `submitButtonText`, `submitButtonTextStyle`, and `onSubmit`.
+
+### Fixed
+
+- Improved search interactions: editing, clearing, and submitting a query no longer unexpectedly changes the selected item.
+
+## [1.1.2] - 2026-09-22
+
+### Changed (1.1.2)
 
 - Set the minimum supported peer dependency versions to `@react-native-picker/picker >=2.4.10`, React `>=18.2.0`, React Native `>=0.72.10`, and `react-native-safe-area-context >=4.6.3`.
 - Set the minimum supported Expo SDK version to 49 (`expo ~49.0.23`).
 
-### Fixed
+### Fixed (1.1.2)
 
 - Improved the modal closing animation and reduced visual flickering during dismissal.
 
@@ -16,32 +48,34 @@
 ### Added (1.1.1)
 
 - Standardized API names with full TypeScript support and backward-compatible deprecated aliases.
-- Added built-in localized defaults, custom themes, flexible styling options, and a native-driver modal overlay.
-- Added `react-native-safe-area-context` as a peer dependency for safe-area layout handling.
-- Exported TypeScript types and helper definitions for the public picker API.
-- Built-in UI text translations via the `locale` prop for 29 supported languages, including automatic device detection for Norwegian Nynorsk (`nn`) normalized to `nb`.
 - A centralized theming model built around `theme` and `customColorScheme` for clean palette configuration.
+- Built-in UI text translations via the `locale` prop for 29 supported languages, including automatic device detection for Norwegian Nynorsk (`nn`) normalized to `nb`.
+- Added built-in localized defaults, custom themes, flexible styling options, and a native-driver modal overlay.
 - Added the `overlay` palette color for customizing the modal backdrop.
 - New, clearer prop names including `actionButtonsPosition`, `enableSearch`, `horizontalPadding`, `itemStyle`, `onValueChange`, `selectedValues`, `columns`, and `theme`.
 - Explicit text props (`acceptButtonText`, `cancelButtonText`, `searchPlaceholder`) now take precedence over localized defaults.
 - Added optional `onSearchFocus` and `onSearchBlur` callbacks for single-column search interactions.
 - Added configurable border-radius properties for the modal, search bar, search clear button, and action buttons (all defaulting to `10`).
+- Added `react-native-safe-area-context` as a peer dependency for safe-area layout handling.
+- Exported TypeScript types and helper definitions for the public picker API.
 - Kept the selected-value highlight inactive for now; its compatibility props remain available but have no visible effect.
 
 ### Changed (1.1.1)
 
-- Preserved backward compatibility for legacy aliases while introducing the new theming and localization API.
-- Updated documentation and reference examples for multi-column pickers and theme-aware search flows.
-- Optimized package distribution with React Native-aware exports and generated CommonJS outputs.
-- Updated peer dependencies to include `react-native-safe-area-context`.
 - Improved search reliability with case- and accent-insensitive matching and proper selection state restoration.
 - Refined multi-column rendering and fixed lifecycle callback order for cancellation actions.
+- Preserved backward compatibility for legacy aliases while introducing the new theming and localization API.
+- Optimized package distribution with React Native-aware exports and generated CommonJS outputs.
+- Updated peer dependencies to include `react-native-safe-area-context`.
+- Updated documentation and reference examples for multi-column pickers and theme-aware search flows.
 
 ### Deprecated (1.1.1)
 
 The following props still work for compatibility, but they were deprecated in `1.1.1` and will be removed in a future major version:
 
 - `actionButtons` -> `actionButtonsPosition`
+- `onValueChange1`, `onValueChange2`, `onValueChange3` -> `onValueChange`
+- `onValuesChange` -> `onValueChange`
 - `bgColor` -> `customColorScheme`
 - `cancelButtonBgColor` -> legacy override for cancel button background; use `theme` + `customColorScheme` instead
 - `actionButtonsBorderColor` -> `customColorScheme`
@@ -49,8 +83,6 @@ The following props still work for compatibility, but they were deprecated in `1
 - `selectionHighlightColor` -> retained for compatibility (currently inactive)
 - `hPadding` -> `horizontalPadding`
 - `searchBar` -> `enableSearch`
-- `onValueChange1`, `onValueChange2`, `onValueChange3` -> `onValueChange`
-- `onValuesChange` -> `onValueChange`
 
 ### Removed (1.1.1)
 
@@ -106,10 +138,10 @@ Legacy aliases from 1.0.x remain supported as deprecated compatibility shims. Ne
 
 ### Changed (1.0.5)
 
-- Performance adjustments and minor corrections.
+- Improved the performance of the search bar focus and blur animations in the selector by using the native driver. This change provides a smoother animation experience.
 - The property name `extraView` has been changed to `hPadding` for improved clarity and consistency in property naming.
 - Property `searchPlaceholderTextColor` has been changed to `searchElementsColor`. The new property `searchElementsColor`, in addition to defining the color of the search bar placeholder, also defines the color of the clear button in the search bar.
-- Improved the performance of the search bar focus and blur animations in the selector by using the native driver. This change provides a smoother animation experience.
+- Performance adjustments and minor corrections.
 
 ### Removed (1.0.5)
 
@@ -123,8 +155,8 @@ Legacy aliases from 1.0.x remain supported as deprecated compatibility shims. Ne
 
 ### Changed (1.0.4)
 
-- Discontinued support for versions prior to `1.0.4`. Developers are encouraged to update to the latest version. Thanks for understanding.
 - Limited package use to `iOS` only. This decision was made to prevent potential errors and dissatisfaction for developers using the package for `Android` applications. For more details see the [README](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/README.md).
+- Discontinued support for versions prior to `1.0.4`. Developers are encouraged to update to the latest version. Thanks for understanding.
 - Important performance adjustments and minor corrections.
 
 ### Added (1.0.4)

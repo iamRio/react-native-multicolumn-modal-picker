@@ -2,5 +2,7 @@ node_modules/
 dist/
 .github/
 .vscode/
-example-app/node_modules/
-example-app/.expo/
+fores-play/node_modules/
+fores-play/.expo/
+fores-play/android/
+fores-play/ios/

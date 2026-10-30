@@ -2,3 +2,4 @@ node_modules/
 .vscode/
 dist/
 *.tgz
+/RELEASE-LOCAL.md

@@ -3,8 +3,6 @@ name: CI and package publish
 on:
   push:
   pull_request:
-  release:
-    types: [published]
 
 permissions:
   contents: read
@@ -27,9 +25,57 @@ jobs:
       - name: Run validation
         run: npm run validate
 
-  publish-npm:
-    if: ${{ github.event_name == 'release' }}
+  detect-version-bump:
     needs: validate
+    runs-on: ubuntu-latest
+    outputs:
+      should_publish: ${{ steps.detect.outputs.should_publish }}
+      should_create_release: ${{ steps.detect.outputs.should_create_release }}
+      package_version: ${{ steps.detect.outputs.package_version }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 24.21.0
+
+      - name: Detect a release-worthy version change
+        id: detect
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF: ${{ github.ref }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          BEFORE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          should_publish=false
+          should_create_release=false
+          package_version="$(node -p "require('./package.json').version")"
+
+          if [ "$EVENT_NAME" = "push" ] &&
+             [ "$REF" = "refs/heads/$DEFAULT_BRANCH" ] &&
+             [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ]; then
+            previous_version="$(git show "$BEFORE_SHA:package.json" | node -e "let input=''; process.stdin.on('data', chunk => input += chunk).on('end', () => process.stdout.write(JSON.parse(input).version))")"
+
+            if [ "$previous_version" != "$package_version" ]; then
+              commit_messages="$(git log --format=%B "$BEFORE_SHA..$HEAD_SHA")"
+              if ! grep -Fq '[skip release]' <<< "$commit_messages"; then
+                should_publish=true
+                should_create_release=true
+              fi
+            fi
+          fi
+
+          echo "package_version=$package_version" >> "$GITHUB_OUTPUT"
+          echo "should_publish=$should_publish" >> "$GITHUB_OUTPUT"
+          echo "should_create_release=$should_create_release" >> "$GITHUB_OUTPUT"
+
+  publish-npm:
+    if: ${{ needs.detect-version-bump.outputs.should_publish == 'true' }}
+    needs: [validate, detect-version-bump]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -42,7 +88,19 @@ jobs:
         with:
           node-version: 24.21.0
           registry-url: https://registry.npmjs.org/
-          cache: npm
+          package-manager-cache: false
+
+      - name: Set up npm for trusted publishing
+        run: |
+          npm install --global npm@latest
+          npm_version="$(npm --version)"
+          NPM_VERSION="$npm_version" node -e '
+            const [major, minor, patch] = process.env.NPM_VERSION.split(".").map(Number);
+            if (major < 11 || (major === 11 && (minor < 5 || (minor === 5 && patch < 1)))) {
+              console.error(`npm ${process.env.NPM_VERSION} is too old for trusted publishing; npm 11.5.1 or later is required.`);
+              process.exit(1);
+            }
+          '
 
       - name: Install dependencies
         run: npm ci
@@ -53,72 +111,16 @@ jobs:
       - name: Publish to npm
         run: npm publish --access public
 
-  update-example:
-    if: ${{ github.event_name == 'release' && needs.publish-npm.result == 'success' }}
-    needs: publish-npm
+  create-github-release:
+    if: ${{ needs.detect-version-bump.outputs.should_create_release == 'true' }}
+    needs: [detect-version-bump, publish-npm]
     runs-on: ubuntu-latest
-    concurrency:
-      group: update-example-${{ github.event.repository.default_branch }}
     permissions:
       contents: write
-      pull-requests: write
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          ref: ${{ github.event.repository.default_branch }}
-
-      - name: Set up Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: 24.21.0
-          cache: npm
-          cache-dependency-path: example-app/package-lock.json
-
-      - name: Update example app dependency
-        working-directory: example-app
-        env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-        run: |
-          package_version="${RELEASE_TAG#v}"
-
-          for attempt in {1..15}; do
-            if npm view "react-native-multicolumn-modal-picker@${package_version}" version --registry=https://registry.npmjs.org/ | grep -qx "${package_version}"; then
-              break
-            fi
-
-            if [ "${attempt}" -eq 15 ]; then
-              echo "Version ${package_version} is not available on npm after waiting for registry propagation."
-              exit 1
-            fi
-
-            echo "Waiting for react-native-multicolumn-modal-picker@${package_version} to become available on npm (attempt ${attempt}/15)."
-            sleep 60
-          done
-
-          npm install "react-native-multicolumn-modal-picker@${package_version}" --save-exact --package-lock-only --ignore-scripts
-
-      - name: Create example app update pull request
+      - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-        run: |
-          package_version="${RELEASE_TAG#v}"
-          branch="chore/update-example-${package_version}"
-
-          if git diff --quiet -- example-app/package.json example-app/package-lock.json; then
-            echo "Example app is already using the published version."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b "$branch" 2>/dev/null || git checkout "$branch"
-          git add example-app/package.json example-app/package-lock.json
-          git commit -m "chore: update example app to ${package_version}" || echo "No changes to commit"
-          git push --set-upstream origin "$branch" --force-with-lease
-          gh pr create \
-            --base "${{ github.event.repository.default_branch }}" \
-            --head "$branch" \
-            --title "chore: update example app to ${package_version}" \
-            --body "Updates the example app to react-native-multicolumn-modal-picker ${package_version}." \
-            || echo "Pull request already exists."
+          PACKAGE_VERSION: ${{ needs.detect-version-bump.outputs.package_version }}
+          RELEASE_TARGET: ${{ github.sha }}
+        run: gh release create "v${PACKAGE_VERSION}" --target "$RELEASE_TARGET" --generate-notes

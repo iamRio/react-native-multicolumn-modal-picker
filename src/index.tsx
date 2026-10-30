@@ -1,7 +1,6 @@
 import React from "react";
-import { Platform } from "react-native";
 import type { MultiColumnModalPickerProps } from "./types";
-import IOSMultiColumnModalPicker from "./platform/ios/IOSMultiColumnModalPicker";
+import MultiColumnModalPickerImplementation from "./components/MultiColumnModalPicker";
 
 export type {
   ActionButtonsPosition,
@@ -18,12 +17,8 @@ export type {
   PickerValuesChangeHandler,
 } from "./types";
 
-const MultiColumnModalPicker = (props: MultiColumnModalPickerProps) => {
-  if (Platform.OS !== "ios") {
-    return null;
-  }
-
-  return <IOSMultiColumnModalPicker {...props} />;
-};
+const MultiColumnModalPicker = (props: MultiColumnModalPickerProps) => (
+  <MultiColumnModalPickerImplementation {...props} />
+);
 
 export default MultiColumnModalPicker;
