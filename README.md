@@ -7,7 +7,7 @@
 [![license](https://img.shields.io/npm/l/react-native-multicolumn-modal-picker)](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/LICENSE)
 [![Platforms: Android, iOS, Web](https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/platforms-supported.svg)](https://github.com/iamRio/react-native-multicolumn-modal-picker)
 
-[**▶ Download Fores Play for Android and try the picker (APK)**](https://github.com/iamRio/react-native-multicolumn-modal-picker/releases)
+[**▶ Download Fores Play for Android and try the picker (APK)**](https://github.com/iamRio/react-native-multicolumn-modal-picker/releases/download/fores-play-apk/fores-play.apk)
 
 [**▶ Try the interactive web demo**](https://playground.getfores.com/)
 
