@@ -7,9 +7,9 @@
 [![license](https://img.shields.io/npm/l/react-native-multicolumn-modal-picker)](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/LICENSE)
 [![Platforms: Android, iOS, Web](https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/platforms-supported.svg)](https://github.com/iamRio/react-native-multicolumn-modal-picker)
 
-[**▶ Download Fores Play for Android and try the picker (APK)**](https://github.com/iamRio/fores-play/releases)
+[**▶ Download Fores Play for Android and try the picker (APK)**](https://github.com/iamRio/react-native-multicolumn-modal-picker/releases)
 
-[**▶ Try the interactive web demo**](https://github.com/iamRio/fores-play-web)
+[**▶ Try the interactive web demo**](https://playground.getfores.com/)
 
 The web demo is a quick way to try the picker in your browser. Its appearance and interaction can differ from the native iOS and Android experience.
 
