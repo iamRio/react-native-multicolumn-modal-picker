@@ -1,8 +1,14 @@
 # Changelog
 
+## [1.2.1] - 2026-10-31
+
+### Changed
+
+- Expanded screen reader support across Android, iOS, and Web with localized labels in all supported languages for picker columns, navigation controls, search input, and the clear-search button.
+
 ## [1.2.0] - 2026-10-26
 
-### Added
+### Added (1.2.0)
 
 - Allowed partial color overrides for light, dark, and named themes. Unspecified colors retain the built-in colors for the active mode, and named theme values take precedence when a color is defined in both entries.
 - Added Android support with virtualized scrollable picker wheels that match the existing iOS modal styling.
@@ -15,7 +21,7 @@
 - Added `submitButtonContainerStyle` and `cancelButtonContainerStyle` to style each action button's touchable container independently from its label.
 - Added the `searchMaxLength` prop to configure the search input character limit. It defaults to `30`, accepts positive safe integers, and can be set to `null` for no limit.
 
-### Changed
+### Changed (1.2.0)
 
 - When no submit button is rendered, selecting an item in a single-column picker submits the selection and closes the modal. Multi-column pickers remain open; the backdrop submits the current values, while the system back action still cancels.
 - Adapted the modal layout for landscape and tablet-sized screens.
@@ -23,12 +29,12 @@
 - Updated Expo compatibility to support SDK 58.
 - Updated the package and example documentation to include Android support.
 
-### Deprecated
+### Deprecated (1.2.0)
 
 - Deprecated `actionButtonsPosition="cancel"`. Use `actionButtonsPosition="bottom"` with `showSubmitButton={false}` instead. The old value remains supported with its existing behavior for compatibility.
 - Deprecated `acceptButtonText`, `acceptButtonTextStyle`, and `onAccept`; use `submitButtonText`, `submitButtonTextStyle`, and `onSubmit`.
 
-### Fixed
+### Fixed (1.2.0)
 
 - Improved search interactions: editing, clearing, and submitting a query no longer unexpectedly changes the selected item.
 

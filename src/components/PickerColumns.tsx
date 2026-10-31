@@ -9,6 +9,9 @@ export const PickerColumns = React.memo(
     itemStyle,
     itemTextColor,
     columnNavigationButtonsColor,
+    columnAccessibilityLabel,
+    previousOptionAccessibilityLabel,
+    nextOptionAccessibilityLabel,
     pickerHeight,
     isSingleColumn,
     showColumnNavigationButtons,
@@ -31,6 +34,11 @@ export const PickerColumns = React.memo(
               itemStyle={itemStyle}
               itemTextColor={itemTextColor}
               columnNavigationButtonsColor={columnNavigationButtonsColor}
+              columnAccessibilityLabel={columnAccessibilityLabel}
+              previousOptionAccessibilityLabel={
+                previousOptionAccessibilityLabel
+              }
+              nextOptionAccessibilityLabel={nextOptionAccessibilityLabel}
               pickerHeight={pickerHeight}
               isSingleColumn={isSingleColumn}
               showColumnNavigationButtons={

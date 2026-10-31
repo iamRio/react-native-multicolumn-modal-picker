@@ -13,6 +13,9 @@ export const PickerColumnView = ({
   itemStyle,
   itemTextColor,
   columnNavigationButtonsColor,
+  columnAccessibilityLabel,
+  previousOptionAccessibilityLabel,
+  nextOptionAccessibilityLabel,
   pickerHeight,
   isSingleColumn,
   showColumnNavigationButtons,
@@ -24,6 +27,8 @@ export const PickerColumnView = ({
     columnIndex={columnIndex}
     selectedValue={selectedValue}
     columnNavigationButtonsColor={columnNavigationButtonsColor}
+    previousOptionAccessibilityLabel={previousOptionAccessibilityLabel}
+    nextOptionAccessibilityLabel={nextOptionAccessibilityLabel}
     showColumnNavigationButtons={showColumnNavigationButtons}
     reserveColumnNavigationButtonSpace={reserveColumnNavigationButtonSpace}
     onValueChange={onValueChange}
@@ -35,6 +40,7 @@ export const PickerColumnView = ({
       selectedValue={selectedValue}
       itemStyle={itemStyle}
       itemTextColor={itemTextColor}
+      columnAccessibilityLabel={columnAccessibilityLabel}
       pickerHeight={
         pickerHeight -
         (reserveColumnNavigationButtonSpace

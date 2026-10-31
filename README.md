@@ -4,8 +4,8 @@
 
 [![npm version](https://img.shields.io/npm/v/react-native-multicolumn-modal-picker?logo=npm&logoColor=white)](https://www.npmjs.com/package/react-native-multicolumn-modal-picker)
 [![downloads](https://img.shields.io/npm/dm/react-native-multicolumn-modal-picker?label=downloads)](https://www.npmjs.com/package/react-native-multicolumn-modal-picker)
-[![license](https://img.shields.io/npm/l/react-native-multicolumn-modal-picker)](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/LICENSE)
-[![Platforms: Android, iOS, Web](https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/platforms-supported.svg)](https://github.com/iamRio/react-native-multicolumn-modal-picker)
+[![license](https://img.shields.io/npm/l/react-native-multicolumn-modal-picker?color=green)](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/LICENSE)
+[![Platforms: Android, iOS, Web](https://img.shields.io/badge/Platforms-Android%20%7C%20iOS%20%7C%20Web-8B5CF6)](https://github.com/iamRio/react-native-multicolumn-modal-picker)
 [![Support on Patreon](https://img.shields.io/badge/support-Patreon-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/rio_fores)
 [![Support on Ko-fi](https://img.shields.io/badge/support-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/rio_fores)
 
@@ -16,20 +16,10 @@
 The web demo is a quick way to try the picker in your browser. Its appearance and interaction can differ from the native iOS and Android experience.
 
 <!-- markdownlint-disable MD033 -->
-<img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/twoColumnSelector.gif" alt="Two-column picker" height="220" />
+<p align="center">
+  <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/features-overview.svg" alt="The eight picker features beside an Android phone showing a coffee app and a three-column latte customization picker." width="100%" />
+</p>
 <!-- markdownlint-enable MD033 -->
-
-## Features
-
-- Configure up to three picker columns.
-- Search a single-column picker by exact value or partial label match.
-- Place or hide action buttons.
-- Customize colors, theme styling, spacing, labels, and text styles.
-- Use built-in light/dark theming or define custom color schemes with `theme` and `customColorScheme`.
-- Automatic device localization for default buttons and search placeholder, with manual `locale` override support.
-- Adapts the picker layout to portrait, landscape, and tablet-sized screens.
-- Supports Android, iOS and Web; single-column pickers on Web can also be navigated with the keyboard arrow keys.
-- Handles large option lists efficiently across Android, iOS and Web.
 
 ## Requirements
 
@@ -73,8 +63,6 @@ npx expo install @react-native-picker/picker
 ```
 
 `@react-native-picker/picker` is an optional peer dependency used for the native iOS picker columns. Android uses the package's built-in scrollable wheel and does not require this dependency.
-
-When the modal opens, the picker slides up while the customizable backdrop fades independently.
 
 ## Picker previews
 
@@ -249,11 +237,11 @@ const SingleColumnWithSearchExample = () => {
 
 ### Public types
 
-The package exposes the public value, item, column, locale, theme, palette, and callback types used by `MultiColumnModalPickerProps` for editor autocomplete and static typing.
+TypeScript types are available for picker props, values, columns, locales, themes, palettes, and callbacks.
 
 ### Picker props
 
-The defaults below reflect the actual TypeScript contract in `MultiColumnModalPickerProps`. Optional props resolve to `undefined` and the component applies runtime fallbacks from the selected theme/locale when needed.
+The table summarizes the available props, types, and defaults.
 
 | Category             | Prop                          | Type                                                                             | Default                    | Description                                                                                                                     |
 | -------------------- | ----------------------------- | -------------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -289,7 +277,7 @@ Set `showSubmitButton` or `showCancelButton` to `false` to hide either action. T
 
 When no submit button is rendered, choosing an item in a single-column picker submits the selection and closes the modal automatically. With multiple columns, the picker stays open so the user can finish changing values; tapping the backdrop submits the current selection, while the device back action cancels and restores the values from when the modal opened. These close behaviors also apply when the corresponding action button is hidden.
 
-By default, column navigation buttons are shown only on non-touch Web devices. On Web, touch and hybrid detection checks the `pointer`, `hover`, `any-pointer`, and `any-hover` media features; they remain hidden by default on native platforms. Set `showColumnNavigationButtons={true}` to show buttons on every column on any platform, `false` to hide them, or pass a tuple such as `showColumnNavigationButtons={[true, false]}` to control columns independently. Unspecified tuple slots retain automatic detection.
+By default, column navigation buttons are shown only on non-touch Web devices and hidden on native platforms. Set `showColumnNavigationButtons` to `true` or `false` to show or hide them on every platform, or pass a tuple such as `[true, false]` to control columns independently. Unspecified tuple slots use the default behavior.
 
 ### Styling props
 
@@ -313,7 +301,7 @@ By default, column navigation buttons are shown only on non-touch Web devices. O
 |                         | `searchClearButtonBorderRadius`  | `number`                                          | `10`                           | Border radius of the search clear button.                                              |
 |                         | `searchTextStyle`                | `StyleProp<TextStyle>`                            | default search text style      | Style for the search input text.                                                       |
 
-All custom color styling should go through `customColorScheme`. Individual color props were removed from the recommended API because they duplicate the same responsibility and make the theme model harder to reason about.
+Use `customColorScheme` to customize picker colors.
 
 The Android wheel shows a selected-row highlight. Set `selectionHighlight` in `customColorScheme` and use `selectionHighlightBorderRadius` to style it. On iOS, the native picker controls its own selection appearance.
 
@@ -355,13 +343,7 @@ All configurable border-radius props default to `10`. `actionButtonsBorderRadius
 
 ### Localization
 
-`locale` only provides the fallback translations for the built-in default texts: the submit button text, the cancel button text, and the search placeholder. If you pass `submitButtonText`, `cancelButtonText`, or `searchPlaceholder` explicitly, those values take precedence and the locale no longer changes them.
-
-#### In other words, the precedence is
-
-1. explicit `submitButtonText` / `cancelButtonText` / `searchPlaceholder`
-2. fallback translations from the selected `locale`
-3. package defaults
+`locale` selects the built-in button labels and search placeholder. Explicit `submitButtonText`, `cancelButtonText`, or `searchPlaceholder` values take precedence.
 
 #### Available built-in languages
 
@@ -385,56 +367,15 @@ The built-in locales are defaults, not a limitation. If your app already uses an
 
 ### Theme and custom color schemes
 
-`theme` selects the palette mode. If omitted, the picker follows the device's light or dark setting; `"auto"` does the same explicitly. Each entry in `customColorScheme` can include only the colors you want to change—neither every theme nor every color is required. Colors you omit keep their built-in values for the active mode.
+`theme` selects the palette mode. If omitted, the picker follows the device's light or dark setting; `"auto"` does the same explicitly. In `customColorScheme`, include only the colors you want to change; other colors keep their built-in values.
 
-Use the `light` and `dark` entries to customize either mode independently. You can also select a custom theme name other than the built-in `"light"`, `"dark"`, and `"auto"` values—for example, `"brand"`—with `theme`; its colors are applied on top of the active light or dark palette. This lets you share brand colors across modes while retaining separate mode-specific adjustments. If the named theme and the active mode both define the same color, the named theme's value is used.
+Use the `light` and `dark` entries to customize each mode independently. To share brand colors across modes, define a named theme (for example, `"brand"`) and select it with `theme`. Named theme colors override matching colors in the active light or dark palette.
 
-For example, the following configuration changes two colors in light mode, five in dark mode, and three additional colors for the selected `"brand"` theme. Any other colors continue to use their built-in values:
-
-```tsx
-<MultiColumnModalPicker
-  visible={visible}
-  theme="brand"
-  customColorScheme={{
-    light: {
-      modalBackground: "#FFFFFF",
-      border: "#D7DEE8",
-    },
-    dark: {
-      modalBackground: "#151B26",
-      border: "#354154",
-      buttonText: "#E6EDF7",
-      inputText: "#E6EDF7",
-      searchBackground: "#202A39",
-    },
-    brand: {
-      buttonText: "#3157A4",
-      columnNavigationButtons: "#3157A4",
-      selectionHighlight: "#DCE7FF",
-    },
-  }}
-  columns={[countries]}
-  selectedValues={[countryCode]}
-  onClose={() => setVisible(false)}
-/>
-```
-
-When the device uses light mode, the picker uses the light palette and applies the two `light` overrides, followed by the three `brand` overrides. In dark mode, it applies the five `dark` overrides and then the `brand` overrides. The named theme only applies when selected with `theme`; without it, only the matching `light` or `dark` entry is used. Use any color keys from the exported `PickerPalette` type.
-
-## What's new in 1.2.0
-
-- Android support with a scrollable picker wheel; iOS continues to use the native picker.
-- Layout adapts to landscape and tablet-sized screens.
-- Custom color schemes can override any subset of colors independently for light mode, dark mode, and named themes.
-- Search, themes, and localized default labels remain available on both platforms.
-
-For the complete version history, see [CHANGELOG.md](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/CHANGELOG.md).
+See the [changelog](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/CHANGELOG.md) for release notes and version history.
 
 ## Feedback
 
 Please open an [issue](https://github.com/iamRio/react-native-multicolumn-modal-picker/issues) or join the [discussion](https://github.com/iamRio/react-native-multicolumn-modal-picker/discussions/1).
-
-If this package is useful, consider giving it a [star on GitHub](https://github.com/iamRio/react-native-multicolumn-modal-picker).
 
 ## Author
 
@@ -446,10 +387,11 @@ MIT. See [LICENSE](https://github.com/iamRio/react-native-multicolumn-modal-pick
 
 ## Support
 
-If you find `react-native-multicolumn-modal-picker` useful, consider supporting its development:
+If you find this package useful:
 
-- Become a sponsor on [Patreon](https://www.patreon.com/rio_fores)
-- Support the project on [Ko-fi](https://ko-fi.com/rio_fores)
+- ⭐ [Star it on GitHub](https://github.com/iamRio/react-native-multicolumn-modal-picker)
+- ❤️ [Support development on Patreon](https://www.patreon.com/rio_fores)
+- ☕ [Support development on Ko-fi](https://ko-fi.com/rio_fores)
 
 ### Hall of Fame & Backer Credits 🏆
 

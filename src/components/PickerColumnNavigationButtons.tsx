@@ -14,6 +14,8 @@ type PickerColumnNavigationButtonsProps = Pick<
   | "columnIndex"
   | "selectedValue"
   | "columnNavigationButtonsColor"
+  | "previousOptionAccessibilityLabel"
+  | "nextOptionAccessibilityLabel"
   | "showColumnNavigationButtons"
   | "reserveColumnNavigationButtonSpace"
   | "onValueChange"
@@ -29,6 +31,8 @@ export const PickerColumnNavigationButtons = ({
   columnIndex,
   selectedValue,
   columnNavigationButtonsColor,
+  previousOptionAccessibilityLabel,
+  nextOptionAccessibilityLabel,
   showColumnNavigationButtons,
   reserveColumnNavigationButtonSpace,
   onValueChange,
@@ -70,7 +74,10 @@ export const PickerColumnNavigationButtons = ({
       {showColumnNavigationButtons && (
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={`Previous option in column ${columnIndex + 1}`}
+          accessibilityLabel={previousOptionAccessibilityLabel.replace(
+            "{column}",
+            String(columnIndex + 1),
+          )}
           disabled={selectedIndex === 0}
           delayLongPress={HOLD_REPEAT_DELAY}
           onPressIn={previousNavigation.onPressIn}
@@ -96,7 +103,10 @@ export const PickerColumnNavigationButtons = ({
       {showColumnNavigationButtons && (
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={`Next option in column ${columnIndex + 1}`}
+          accessibilityLabel={nextOptionAccessibilityLabel.replace(
+            "{column}",
+            String(columnIndex + 1),
+          )}
           disabled={selectedIndex === column.length - 1}
           delayLongPress={HOLD_REPEAT_DELAY}
           onPressIn={nextNavigation.onPressIn}

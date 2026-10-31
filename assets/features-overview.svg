@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1060" viewBox="0 0 1600 1060" fill="none">
+  <defs>
+    <linearGradient id="background" x1="86" y1="42" x2="1502" y2="1042" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2B211B"/>
+      <stop offset="1" stop-color="#17120F"/>
+    </linearGradient>
+    <linearGradient id="highlight" x1="1110" y1="710" x2="1500" y2="710" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F3E4D1"/>
+      <stop offset="1" stop-color="#E8D3B9"/>
+    </linearGradient>
+    <linearGradient id="coffee" x1="1234" y1="206" x2="1450" y2="366" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8D9C6"/>
+      <stop offset="1" stop-color="#D6C1A7"/>
+    </linearGradient>
+    <filter id="phoneShadow" x="1025" y="12" width="558" height="1056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="17" result="blur"/>
+      <feOffset in="blur" dy="12" result="offsetBlur"/>
+      <feFlood flood-color="#020711" flood-opacity=".45" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="screen">
+      <rect x="1088" y="48" width="432" height="960" rx="46"/>
+    </clipPath>
+    <clipPath id="canvas">
+      <rect width="1600" height="1060" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1600" height="1060" rx="28" fill="url(#background)"/>
+  <g clip-path="url(#canvas)">
+    <circle cx="1420" cy="170" r="245" fill="#D6A36B" fill-opacity=".07"/>
+    <circle cx="1420" cy="170" r="152" stroke="#E8D3B9" stroke-opacity=".1"/>
+    <circle cx="1420" cy="170" r="102" stroke="#E8D3B9" stroke-opacity=".07"/>
+  </g>
+
+  <text x="88" y="104" fill="#D6A36B" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="3.2">FEATURES</text>
+  <path d="M88 135H880" stroke="#E8D3B9" stroke-opacity=".17"/>
+
+  <rect x="88" y="170" width="4" height="64" rx="2" fill="#D6A36B"/>
+  <text x="116" y="198" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700">Multi-column selection</text>
+  <text x="116" y="228" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="19">configure up to three columns in one picker.</text>
+  <path d="M88 258H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+
+  <circle cx="90" cy="298" r="3" fill="#D6A36B"/>
+  <text x="112" y="306" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Made to fit your app</text>
+  <text x="112" y="334" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">customize the layout, controls, and appearance.</text>
+  <path d="M88 360H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+
+  <circle cx="90" cy="400" r="3" fill="#D6A36B"/>
+  <text x="112" y="408" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Consistent across platforms</text>
+  <text x="112" y="436" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">one cohesive design for Android, iOS, and Web.</text>
+  <path d="M88 462H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+
+  <circle cx="90" cy="502" r="3" fill="#D6A36B"/>
+  <text x="112" y="510" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Optional search</text>
+  <text x="112" y="538" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">enable it for single-column pickers.</text>
+  <path d="M88 564H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+
+  <circle cx="90" cy="604" r="3" fill="#D6A36B"/>
+  <text x="112" y="612" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Responsive layout</text>
+  <text x="112" y="640" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">adapts to different screen sizes and orientations.</text>
+  <path d="M88 666H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+
+  <circle cx="90" cy="706" r="3" fill="#D6A36B"/>
+  <text x="112" y="714" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Smooth with large lists</text>
+  <text x="112" y="742" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">optimized for responsive selection.</text>
+  <path d="M88 768H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+
+  <circle cx="90" cy="808" r="3" fill="#D6A36B"/>
+  <text x="112" y="816" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">29 built-in translations</text>
+  <text x="112" y="844" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">automatic system-language detection,</text>
+  <text x="112" y="870" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">with support for custom text.</text>
+  <path d="M88 896H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+
+  <circle cx="90" cy="936" r="3" fill="#D6A36B"/>
+  <text x="112" y="944" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Small footprint by design</text>
+  <text x="112" y="972" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">~34 KB packed, with no bundled dependencies.</text>
+
+  <g filter="url(#phoneShadow)">
+    <rect x="1068" y="28" width="472" height="1000" rx="66" fill="#080B10"/>
+    <path d="M1540 286H1540.5C1543.261 286 1545.5 288.239 1545.5 291V363C1545.5 365.761 1543.261 368 1540.5 368H1540V286Z" fill="#343C45" stroke="#10151B" stroke-width="1"/>
+    <path d="M1540 402H1540.5C1543.261 402 1545.5 404.239 1545.5 407V451C1545.5 453.761 1543.261 456 1540.5 456H1540V402Z" fill="#343C45" stroke="#10151B" stroke-width="1"/>
+    <rect x="1069.5" y="29.5" width="469" height="997" rx="64.5" stroke="#69727C" stroke-opacity=".64" stroke-width="1.5"/>
+
+    <g clip-path="url(#screen)">
+      <rect x="1088" y="48" width="432" height="960" fill="#F5F3EE"/>
+
+      <text x="1112" y="82" fill="#18232A" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">23:30</text>
+      <circle cx="1304" cy="67" r="8" fill="#CDD2D2"/>
+      <circle cx="1304" cy="67" r="5.5" fill="#05080C"/>
+      <circle cx="1302.5" cy="65.5" r="1.3" fill="#172C35"/>
+      <rect x="1420" y="72" width="3" height="6" rx="1" fill="#26343C"/>
+      <rect x="1425" y="69" width="3" height="9" rx="1" fill="#26343C"/>
+      <rect x="1430" y="66" width="3" height="12" rx="1" fill="#26343C"/>
+      <rect x="1435" y="63" width="3" height="15" rx="1" fill="#26343C"/>
+      <path d="M1443 69C1449 63 1458 63 1464 69M1447 73C1451 69 1456 69 1460 73M1452 77C1453 76 1454 76 1455 77" stroke="#26343C" stroke-width="1.6" stroke-linecap="round"/>
+      <rect x="1470" y="65" width="20" height="13" rx="3" stroke="#26343C" stroke-width="1.5"/>
+      <rect x="1491.5" y="69" width="2.5" height="5" rx="1" fill="#26343C"/>
+      <rect x="1473" y="68" width="13" height="7" rx="1.5" fill="#26343C"/>
+
+      <text x="1112" y="130" fill="#65736D" font-family="Arial, Helvetica, sans-serif" font-size="13">Good morning, Río</text>
+      <text x="1112" y="163" fill="#1C2A25" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Morrow Coffee</text>
+      <circle cx="1482" cy="145" r="21" fill="#FFFFFF"/>
+      <path d="M1473 140H1491L1489 155H1475L1473 140ZM1478 140C1478 136 1480 134 1482 134C1485 134 1487 136 1487 140" stroke="#45544C" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="1490" cy="137" r="6" fill="#D27757"/>
+      <text x="1488" y="140" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="8" font-weight="700">2</text>
+
+      <rect x="1112" y="190" width="384" height="1" fill="#E4E1D9"/>
+      <text x="1112" y="220" fill="#28352E" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Today’s pick</text>
+      <rect x="1112" y="236" width="384" height="156" rx="16" fill="url(#coffee)"/>
+      <circle cx="1397" cy="310" r="65" fill="#EDE3D5" fill-opacity=".55"/>
+      <ellipse cx="1397" cy="345" rx="52" ry="12" fill="#9E8061" fill-opacity=".2"/>
+      <path d="M1361 281H1428L1421 337C1420 349 1410 357 1398 357H1392C1380 357 1370 349 1369 337L1361 281Z" fill="#FAF8F1"/>
+      <path d="M1427 291H1438C1450 291 1452 306 1447 317C1443 326 1435 327 1424 326" stroke="#FAF8F1" stroke-width="8" stroke-linecap="round"/>
+      <ellipse cx="1394" cy="283" rx="34" ry="8" fill="#6F4A33"/>
+      <path d="M1380 282C1386 277 1396 278 1401 283C1394 285 1387 286 1380 282Z" fill="#E6D1A8"/>
+      <text x="1132" y="273" fill="#667166" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1.4">BARISTA FAVORITE</text>
+      <text x="1132" y="316" fill="#29352E" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">House latte</text>
+      <text x="1132" y="340" fill="#5E685F" font-family="Arial, Helvetica, sans-serif" font-size="13">Double espresso, steamed milk</text>
+      <text x="1132" y="368" fill="#29352E" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700">From $4.80</text>
+      <rect x="1112" y="411" width="384" height="48" rx="13" fill="#5A4031"/>
+      <text x="1304" y="441" text-anchor="middle" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700">Customize drink</text>
+
+      <rect x="1088" y="48" width="432" height="964" fill="#111922" fill-opacity=".48"/>
+
+      <path d="M1088 487C1088 459.386 1110.39 437 1138 437H1470C1497.61 437 1520 459.386 1520 487V1012H1088V487Z" fill="#F6F0E7"/>
+      <path d="M1088 487C1088 459.386 1110.39 437 1138 437H1470C1497.61 437 1520 459.386 1520 487" stroke="#E5D8C8"/>
+      <rect x="1267" y="453" width="74" height="5" rx="2.5" fill="#C5B5A3"/>
+
+      <text x="1114" y="518" fill="#9A684A" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="700" letter-spacing="1.4">HOUSE LATTE</text>
+      <text x="1114" y="548" fill="#30251E" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Customize</text>
+      <text x="1114" y="575" fill="#74665A" font-family="Arial, Helvetica, sans-serif" font-size="13">Choose size, milk, and espresso shots</text>
+      <path d="M1112 596H1496" stroke="#E5D8C8"/>
+
+      <text x="1130" y="625" fill="#927D6A" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700" letter-spacing="1.1">SIZE</text>
+      <text x="1262" y="625" fill="#927D6A" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700" letter-spacing="1.1">MILK</text>
+      <text x="1404" y="625" fill="#927D6A" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700" letter-spacing="1.1">SHOTS</text>
+      <g opacity=".18">
+        <text transform="matrix(1 0 0 .9 0 67.7)" x="1130" y="677" fill="#776B60" font-family="Arial, Helvetica, sans-serif" font-size="14">8 oz</text>
+        <text transform="matrix(1 0 0 .9 0 67.7)" x="1262" y="677" fill="#776B60" font-family="Arial, Helvetica, sans-serif" font-size="14">Whole</text>
+        <text transform="matrix(1 0 0 .9 0 67.7)" x="1404" y="677" fill="#776B60" font-family="Arial, Helvetica, sans-serif" font-size="14">1</text>
+      </g>
+      <g opacity=".56">
+        <text transform="matrix(1 0 0 .97 0 21.33)" x="1130" y="711" fill="#74665A" font-family="Arial, Helvetica, sans-serif" font-size="14">12 oz</text>
+        <text transform="matrix(1 0 0 .97 0 21.33)" x="1262" y="711" fill="#74665A" font-family="Arial, Helvetica, sans-serif" font-size="14">Skim</text>
+        <text transform="matrix(1 0 0 .97 0 21.33)" x="1404" y="711" fill="#74665A" font-family="Arial, Helvetica, sans-serif" font-size="14">1.5</text>
+      </g>
+      <rect x="1108" y="714" width="392" height="50" rx="10" fill="#E8D9C7"/>
+      <text x="1130" y="745" fill="#30251E" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">16 oz</text>
+      <text x="1262" y="745" fill="#30251E" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Oat</text>
+      <text x="1404" y="745" fill="#30251E" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">2</text>
+      <g opacity=".56">
+        <text transform="matrix(1 0 0 .97 0 23.37)" x="1130" y="779" fill="#74665A" font-family="Arial, Helvetica, sans-serif" font-size="14">20 oz</text>
+        <text transform="matrix(1 0 0 .97 0 23.37)" x="1262" y="779" fill="#74665A" font-family="Arial, Helvetica, sans-serif" font-size="14">Almond</text>
+        <text transform="matrix(1 0 0 .97 0 23.37)" x="1404" y="779" fill="#74665A" font-family="Arial, Helvetica, sans-serif" font-size="14">3</text>
+      </g>
+      <g opacity=".18">
+        <text transform="matrix(1 0 0 .9 0 81.3)" x="1130" y="813" fill="#776B60" font-family="Arial, Helvetica, sans-serif" font-size="14">24 oz</text>
+        <text transform="matrix(1 0 0 .9 0 81.3)" x="1262" y="813" fill="#776B60" font-family="Arial, Helvetica, sans-serif" font-size="14">Soy</text>
+        <text transform="matrix(1 0 0 .9 0 81.3)" x="1404" y="813" fill="#776B60" font-family="Arial, Helvetica, sans-serif" font-size="14">4</text>
+      </g>
+
+      <path d="M1112 858H1496" stroke="#E5D8C8"/>
+      <rect x="1112" y="879" width="384" height="52" rx="14" fill="#78523C"/>
+      <text x="1304" y="912" text-anchor="middle" fill="#FFF9F1" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700">Add to order · $5.55</text>
+      <rect x="1239" y="990" width="130" height="5" rx="2.5" fill="#D1D8D6"/>
+    </g>
+  </g>
+</svg>

@@ -16,6 +16,9 @@ export const PickerColumnView = React.memo(function PickerColumnView({
   itemStyle,
   itemTextColor,
   columnNavigationButtonsColor,
+  columnAccessibilityLabel,
+  previousOptionAccessibilityLabel,
+  nextOptionAccessibilityLabel,
   pickerHeight,
   showColumnNavigationButtons,
   reserveColumnNavigationButtonSpace,
@@ -39,6 +42,8 @@ export const PickerColumnView = React.memo(function PickerColumnView({
       columnIndex={columnIndex}
       selectedValue={selectedValue}
       columnNavigationButtonsColor={columnNavigationButtonsColor}
+      previousOptionAccessibilityLabel={previousOptionAccessibilityLabel}
+      nextOptionAccessibilityLabel={nextOptionAccessibilityLabel}
       showColumnNavigationButtons={showColumnNavigationButtons}
       reserveColumnNavigationButtonSpace={reserveColumnNavigationButtonSpace}
       onValueChange={onValueChange}
@@ -57,6 +62,10 @@ export const PickerColumnView = React.memo(function PickerColumnView({
         ]}
         itemStyle={[styles.itemText, { color: itemTextColor }, itemStyle]}
         selectedValue={selectedValue}
+        accessibilityLabel={columnAccessibilityLabel.replace(
+          "{column}",
+          String(columnIndex + 1),
+        )}
         onValueChange={onValueChange}
       >
         {items}

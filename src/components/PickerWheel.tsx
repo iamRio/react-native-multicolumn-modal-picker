@@ -116,6 +116,7 @@ export const PickerWheel = React.memo(
     selectedValue,
     itemStyle,
     itemTextColor,
+    columnAccessibilityLabel,
     pickerHeight,
     scrollEnabled = true,
     animateSelectedValueChange = false,
@@ -379,7 +380,10 @@ export const PickerWheel = React.memo(
       <View
         accessible
         accessibilityRole="adjustable"
-        accessibilityLabel={`Column ${columnIndex + 1}`}
+        accessibilityLabel={columnAccessibilityLabel.replace(
+          "{column}",
+          String(columnIndex + 1),
+        )}
         accessibilityValue={{
           text: selectedItem
             ? `${selectedItem.label}, ${selectedIndex + 1} of ${column.length}`

@@ -538,6 +538,11 @@ export type DefaultTextSet = {
   accept: string;
   cancel: string;
   searchPlaceholder: string;
+  searchAccessibilityLabel: string;
+  clearSearch: string;
+  columnAccessibilityLabel: string;
+  previousOptionAccessibilityLabel: string;
+  nextOptionAccessibilityLabel: string;
 };
 
 export type PickerColumnViewProps = {
@@ -547,6 +552,9 @@ export type PickerColumnViewProps = {
   itemStyle?: StyleProp<TextStyle>;
   itemTextColor: string;
   columnNavigationButtonsColor: string;
+  columnAccessibilityLabel: string;
+  previousOptionAccessibilityLabel: string;
+  nextOptionAccessibilityLabel: string;
   pickerHeight: number;
   isSingleColumn: boolean;
   showColumnNavigationButtons: boolean;
@@ -558,6 +566,8 @@ export type PickerWheelProps = Omit<
   PickerColumnViewProps,
   | "isSingleColumn"
   | "columnNavigationButtonsColor"
+  | "previousOptionAccessibilityLabel"
+  | "nextOptionAccessibilityLabel"
   | "showColumnNavigationButtons"
   | "reserveColumnNavigationButtonSpace"
 > & {
@@ -591,6 +601,9 @@ export type PickerColumnsProps = {
   itemStyle?: StyleProp<TextStyle>;
   itemTextColor: string;
   columnNavigationButtonsColor: string;
+  columnAccessibilityLabel: string;
+  previousOptionAccessibilityLabel: string;
+  nextOptionAccessibilityLabel: string;
   pickerHeight: number;
   isSingleColumn: boolean;
   showColumnNavigationButtons: readonly [boolean, boolean, boolean];
@@ -608,6 +621,8 @@ export type SearchBarProps = {
   clearTextColor: string;
   inputColor: string;
   placeholder: string;
+  accessibilityLabel: string;
+  clearButtonAccessibilityLabel: string;
   placeholderTextColor: string;
   searchValue: string;
   searchBarBorderRadius: number;

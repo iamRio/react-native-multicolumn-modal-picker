@@ -798,6 +798,8 @@ const MultiColumnModalPickerContent = ({
                 onClear={handleClearSearch}
                 onFocus={onSearchFocus}
                 placeholder={resolvedSearchPlaceholder}
+                accessibilityLabel={localizedTexts.searchAccessibilityLabel}
+                clearButtonAccessibilityLabel={localizedTexts.clearSearch}
                 placeholderTextColor={colors.searchElements}
                 searchBarBorderRadius={searchBarBorderRadius}
                 searchClearButtonBorderRadius={searchClearButtonBorderRadius}
@@ -841,6 +843,15 @@ const MultiColumnModalPickerContent = ({
                   itemStyle={resolvedItemStyle}
                   itemTextColor={colors.pickerItemText}
                   columnNavigationButtonsColor={colors.columnNavigationButtons}
+                  columnAccessibilityLabel={
+                    localizedTexts.columnAccessibilityLabel
+                  }
+                  previousOptionAccessibilityLabel={
+                    localizedTexts.previousOptionAccessibilityLabel
+                  }
+                  nextOptionAccessibilityLabel={
+                    localizedTexts.nextOptionAccessibilityLabel
+                  }
                   onValueChanges={onValueChanges}
                   pickerHeight={pickerHeight}
                   isSingleColumn={isSingleColumn}

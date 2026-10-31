@@ -20,6 +20,8 @@ export const SearchBar = ({
   clearButtonColor,
   clearTextColor,
   inputColor,
+  accessibilityLabel,
+  clearButtonAccessibilityLabel,
   placeholder,
   placeholderTextColor,
   searchValue,
@@ -44,6 +46,8 @@ export const SearchBar = ({
         },
       ]}
       onPress={onClear}
+      accessibilityRole="button"
+      accessibilityLabel={clearButtonAccessibilityLabel}
     >
       <Text style={[styles.searchClearText, { color: clearTextColor }]}>X</Text>
     </TouchableOpacity>
@@ -66,6 +70,7 @@ export const SearchBar = ({
             Platform.OS === "web" && webSearchInputStyle,
           ]}
           ref={inputRef}
+          accessibilityLabel={accessibilityLabel}
           maxLength={searchMaxLength ?? undefined}
           placeholderTextColor={placeholderTextColor}
           placeholder={placeholder}

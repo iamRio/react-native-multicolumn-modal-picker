@@ -2,146 +2,291 @@
   "en": {
     "accept": "Accept",
     "cancel": "Cancel",
-    "searchPlaceholder": "Search here"
+    "searchPlaceholder": "Search here",
+    "searchAccessibilityLabel": "Search options",
+    "clearSearch": "Clear search",
+    "columnAccessibilityLabel": "Column {column}",
+    "previousOptionAccessibilityLabel": "Previous option in column {column}",
+    "nextOptionAccessibilityLabel": "Next option in column {column}"
   },
   "es": {
     "accept": "Aceptar",
     "cancel": "Cancelar",
-    "searchPlaceholder": "Buscar"
+    "searchPlaceholder": "Buscar",
+    "searchAccessibilityLabel": "Buscar opciones",
+    "clearSearch": "Borrar búsqueda",
+    "columnAccessibilityLabel": "Columna {column}",
+    "previousOptionAccessibilityLabel": "Opción anterior en la columna {column}",
+    "nextOptionAccessibilityLabel": "Opción siguiente en la columna {column}"
   },
   "fr": {
     "accept": "Valider",
     "cancel": "Annuler",
-    "searchPlaceholder": "Rechercher"
+    "searchPlaceholder": "Rechercher",
+    "searchAccessibilityLabel": "Rechercher des options",
+    "clearSearch": "Effacer la recherche",
+    "columnAccessibilityLabel": "Colonne {column}",
+    "previousOptionAccessibilityLabel": "Option précédente dans la colonne {column}",
+    "nextOptionAccessibilityLabel": "Option suivante dans la colonne {column}"
   },
   "de": {
     "accept": "Bestätigen",
     "cancel": "Abbrechen",
-    "searchPlaceholder": "Suchen"
+    "searchPlaceholder": "Suchen",
+    "searchAccessibilityLabel": "Optionen suchen",
+    "clearSearch": "Suche löschen",
+    "columnAccessibilityLabel": "Spalte {column}",
+    "previousOptionAccessibilityLabel": "Vorherige Option in Spalte {column}",
+    "nextOptionAccessibilityLabel": "Nächste Option in Spalte {column}"
   },
   "it": {
     "accept": "Accetta",
     "cancel": "Annulla",
-    "searchPlaceholder": "Cerca"
+    "searchPlaceholder": "Cerca",
+    "searchAccessibilityLabel": "Cerca opzioni",
+    "clearSearch": "Cancella ricerca",
+    "columnAccessibilityLabel": "Colonna {column}",
+    "previousOptionAccessibilityLabel": "Opzione precedente nella colonna {column}",
+    "nextOptionAccessibilityLabel": "Opzione successiva nella colonna {column}"
   },
   "pt": {
     "accept": "Aceitar",
     "cancel": "Cancelar",
-    "searchPlaceholder": "Pesquisar"
+    "searchPlaceholder": "Pesquisar",
+    "searchAccessibilityLabel": "Pesquisar opções",
+    "clearSearch": "Limpar pesquisa",
+    "columnAccessibilityLabel": "Coluna {column}",
+    "previousOptionAccessibilityLabel": "Opção anterior na coluna {column}",
+    "nextOptionAccessibilityLabel": "Próxima opção na coluna {column}"
   },
   "ru": {
     "accept": "Принять",
     "cancel": "Отмена",
-    "searchPlaceholder": "Поиск"
+    "searchPlaceholder": "Поиск",
+    "searchAccessibilityLabel": "Поиск вариантов",
+    "clearSearch": "Очистить поиск",
+    "columnAccessibilityLabel": "Столбец {column}",
+    "previousOptionAccessibilityLabel": "Предыдущий вариант в столбце {column}",
+    "nextOptionAccessibilityLabel": "Следующий вариант в столбце {column}"
   },
   "ja": {
     "accept": "完了",
     "cancel": "キャンセル",
-    "searchPlaceholder": "検索"
+    "searchPlaceholder": "検索",
+    "searchAccessibilityLabel": "選択肢を検索",
+    "clearSearch": "検索をクリア",
+    "columnAccessibilityLabel": "{column}列",
+    "previousOptionAccessibilityLabel": "{column}列の前の選択肢",
+    "nextOptionAccessibilityLabel": "{column}列の次の選択肢"
   },
   "ko": {
     "accept": "확인",
     "cancel": "취소",
-    "searchPlaceholder": "검색"
+    "searchPlaceholder": "검색",
+    "searchAccessibilityLabel": "항목 검색",
+    "clearSearch": "검색 지우기",
+    "columnAccessibilityLabel": "{column}열",
+    "previousOptionAccessibilityLabel": "{column}열 이전 항목",
+    "nextOptionAccessibilityLabel": "{column}열 다음 항목"
   },
   "zh": {
     "accept": "确认",
     "cancel": "取消",
-    "searchPlaceholder": "搜索"
+    "searchPlaceholder": "搜索",
+    "searchAccessibilityLabel": "搜索选项",
+    "clearSearch": "清除搜索",
+    "columnAccessibilityLabel": "第 {column} 列",
+    "previousOptionAccessibilityLabel": "第 {column} 列的上一选项",
+    "nextOptionAccessibilityLabel": "第 {column} 列的下一选项"
   },
   "ar": {
     "accept": "تأكيد",
     "cancel": "إلغاء",
-    "searchPlaceholder": "بحث"
+    "searchPlaceholder": "بحث",
+    "searchAccessibilityLabel": "البحث عن الخيارات",
+    "clearSearch": "مسح البحث",
+    "columnAccessibilityLabel": "العمود {column}",
+    "previousOptionAccessibilityLabel": "الخيار السابق في العمود {column}",
+    "nextOptionAccessibilityLabel": "الخيار التالي في العمود {column}"
   },
   "hi": {
     "accept": "पुष्टि करें",
     "cancel": "रद्द करें",
-    "searchPlaceholder": "खोजें"
+    "searchPlaceholder": "खोजें",
+    "searchAccessibilityLabel": "विकल्प खोजें",
+    "clearSearch": "खोज साफ़ करें",
+    "columnAccessibilityLabel": "कॉलम {column}",
+    "previousOptionAccessibilityLabel": "कॉलम {column} में पिछला विकल्प",
+    "nextOptionAccessibilityLabel": "कॉलम {column} में अगला विकल्प"
   },
   "tr": {
     "accept": "Kabul et",
     "cancel": "İptal",
-    "searchPlaceholder": "Ara"
+    "searchPlaceholder": "Ara",
+    "searchAccessibilityLabel": "Seçenekleri ara",
+    "clearSearch": "Aramayı temizle",
+    "columnAccessibilityLabel": "{column}. sütun",
+    "previousOptionAccessibilityLabel": "{column}. sütundaki önceki seçenek",
+    "nextOptionAccessibilityLabel": "{column}. sütundaki sonraki seçenek"
   },
   "nl": {
     "accept": "Accepteren",
     "cancel": "Annuleren",
-    "searchPlaceholder": "Zoeken"
+    "searchPlaceholder": "Zoeken",
+    "searchAccessibilityLabel": "Opties zoeken",
+    "clearSearch": "Zoekopdracht wissen",
+    "columnAccessibilityLabel": "Kolom {column}",
+    "previousOptionAccessibilityLabel": "Vorige optie in kolom {column}",
+    "nextOptionAccessibilityLabel": "Volgende optie in kolom {column}"
   },
   "pl": {
     "accept": "Akceptuj",
     "cancel": "Anuluj",
-    "searchPlaceholder": "Szukaj"
+    "searchPlaceholder": "Szukaj",
+    "searchAccessibilityLabel": "Szukaj opcji",
+    "clearSearch": "Wyczyść wyszukiwanie",
+    "columnAccessibilityLabel": "Kolumna {column}",
+    "previousOptionAccessibilityLabel": "Poprzednia opcja w kolumnie {column}",
+    "nextOptionAccessibilityLabel": "Następna opcja w kolumnie {column}"
   },
   "sv": {
     "accept": "Bekräfta",
     "cancel": "Avbryt",
-    "searchPlaceholder": "Sök"
+    "searchPlaceholder": "Sök",
+    "searchAccessibilityLabel": "Sök efter alternativ",
+    "clearSearch": "Rensa sökning",
+    "columnAccessibilityLabel": "Kolumn {column}",
+    "previousOptionAccessibilityLabel": "Föregående alternativ i kolumn {column}",
+    "nextOptionAccessibilityLabel": "Nästa alternativ i kolumn {column}"
   },
   "nb": {
     "accept": "Godta",
     "cancel": "Avbryt",
-    "searchPlaceholder": "Søk"
+    "searchPlaceholder": "Søk",
+    "searchAccessibilityLabel": "Søk etter alternativer",
+    "clearSearch": "Tøm søket",
+    "columnAccessibilityLabel": "Kolonne {column}",
+    "previousOptionAccessibilityLabel": "Forrige alternativ i kolonne {column}",
+    "nextOptionAccessibilityLabel": "Neste alternativ i kolonne {column}"
   },
   "da": {
     "accept": "Bekræft",
     "cancel": "Annuller",
-    "searchPlaceholder": "Søg"
+    "searchPlaceholder": "Søg",
+    "searchAccessibilityLabel": "Søg efter muligheder",
+    "clearSearch": "Ryd søgning",
+    "columnAccessibilityLabel": "Kolonne {column}",
+    "previousOptionAccessibilityLabel": "Forrige mulighed i kolonne {column}",
+    "nextOptionAccessibilityLabel": "Næste mulighed i kolonne {column}"
   },
   "fi": {
     "accept": "Vahvista",
     "cancel": "Peruuta",
-    "searchPlaceholder": "Hae"
+    "searchPlaceholder": "Hae",
+    "searchAccessibilityLabel": "Hae vaihtoehtoja",
+    "clearSearch": "Tyhjennä haku",
+    "columnAccessibilityLabel": "Sarake {column}",
+    "previousOptionAccessibilityLabel": "Edellinen vaihtoehto sarakkeessa {column}",
+    "nextOptionAccessibilityLabel": "Seuraava vaihtoehto sarakkeessa {column}"
   },
   "cs": {
     "accept": "Potvrdit",
     "cancel": "Zrušit",
-    "searchPlaceholder": "Hledat"
+    "searchPlaceholder": "Hledat",
+    "searchAccessibilityLabel": "Hledat možnosti",
+    "clearSearch": "Vymazat hledání",
+    "columnAccessibilityLabel": "Sloupec {column}",
+    "previousOptionAccessibilityLabel": "Předchozí možnost ve sloupci {column}",
+    "nextOptionAccessibilityLabel": "Další možnost ve sloupci {column}"
   },
   "el": {
     "accept": "Επιβεβαίωση",
     "cancel": "Ακύρωση",
-    "searchPlaceholder": "Αναζήτηση"
+    "searchPlaceholder": "Αναζήτηση",
+    "searchAccessibilityLabel": "Αναζήτηση επιλογών",
+    "clearSearch": "Εκκαθάριση αναζήτησης",
+    "columnAccessibilityLabel": "Στήλη {column}",
+    "previousOptionAccessibilityLabel": "Προηγούμενη επιλογή στη στήλη {column}",
+    "nextOptionAccessibilityLabel": "Επόμενη επιλογή στη στήλη {column}"
   },
   "id": {
     "accept": "Konfirmasi",
     "cancel": "Batal",
-    "searchPlaceholder": "Cari"
+    "searchPlaceholder": "Cari",
+    "searchAccessibilityLabel": "Cari pilihan",
+    "clearSearch": "Hapus pencarian",
+    "columnAccessibilityLabel": "Kolom {column}",
+    "previousOptionAccessibilityLabel": "Pilihan sebelumnya di kolom {column}",
+    "nextOptionAccessibilityLabel": "Pilihan berikutnya di kolom {column}"
   },
   "th": {
     "accept": "ยืนยัน",
     "cancel": "ยกเลิก",
-    "searchPlaceholder": "ค้นหา"
+    "searchPlaceholder": "ค้นหา",
+    "searchAccessibilityLabel": "ค้นหาตัวเลือก",
+    "clearSearch": "ล้างการค้นหา",
+    "columnAccessibilityLabel": "คอลัมน์ที่ {column}",
+    "previousOptionAccessibilityLabel": "ตัวเลือกก่อนหน้าในคอลัมน์ที่ {column}",
+    "nextOptionAccessibilityLabel": "ตัวเลือกถัดไปในคอลัมน์ที่ {column}"
   },
   "uk": {
     "accept": "Підтвердити",
     "cancel": "Скасувати",
-    "searchPlaceholder": "Пошук"
+    "searchPlaceholder": "Пошук",
+    "searchAccessibilityLabel": "Пошук варіантів",
+    "clearSearch": "Очистити пошук",
+    "columnAccessibilityLabel": "Стовпець {column}",
+    "previousOptionAccessibilityLabel": "Попередній варіант у стовпці {column}",
+    "nextOptionAccessibilityLabel": "Наступний варіант у стовпці {column}"
   },
   "he": {
     "accept": "אשר",
     "cancel": "ביטול",
-    "searchPlaceholder": "חיפוש"
+    "searchPlaceholder": "חיפוש",
+    "searchAccessibilityLabel": "חיפוש אפשרויות",
+    "clearSearch": "נקה חיפוש",
+    "columnAccessibilityLabel": "עמודה {column}",
+    "previousOptionAccessibilityLabel": "האפשרות הקודמת בעמודה {column}",
+    "nextOptionAccessibilityLabel": "האפשרות הבאה בעמודה {column}"
   },
   "ro": {
     "accept": "Accept",
     "cancel": "Anulare",
-    "searchPlaceholder": "Caută"
+    "searchPlaceholder": "Caută",
+    "searchAccessibilityLabel": "Caută opțiuni",
+    "clearSearch": "Șterge căutarea",
+    "columnAccessibilityLabel": "Coloana {column}",
+    "previousOptionAccessibilityLabel": "Opțiunea anterioară din coloana {column}",
+    "nextOptionAccessibilityLabel": "Opțiunea următoare din coloana {column}"
   },
   "hu": {
     "accept": "Megerősítés",
     "cancel": "Mégse",
-    "searchPlaceholder": "Keresés"
+    "searchPlaceholder": "Keresés",
+    "searchAccessibilityLabel": "Lehetőségek keresése",
+    "clearSearch": "Keresés törlése",
+    "columnAccessibilityLabel": "{column}. oszlop",
+    "previousOptionAccessibilityLabel": "Előző lehetőség a(z) {column}. oszlopban",
+    "nextOptionAccessibilityLabel": "Következő lehetőség a(z) {column}. oszlopban"
   },
   "sk": {
     "accept": "Potvrdiť",
     "cancel": "Zrušiť",
-    "searchPlaceholder": "Hľadať"
+    "searchPlaceholder": "Hľadať",
+    "searchAccessibilityLabel": "Hľadať možnosti",
+    "clearSearch": "Vymazať hľadanie",
+    "columnAccessibilityLabel": "Stĺpec {column}",
+    "previousOptionAccessibilityLabel": "Predchádzajúca možnosť v stĺpci {column}",
+    "nextOptionAccessibilityLabel": "Nasledujúca možnosť v stĺpci {column}"
   },
   "vi": {
     "accept": "Xác nhận",
     "cancel": "Hủy",
-    "searchPlaceholder": "Tìm kiếm"
+    "searchPlaceholder": "Tìm kiếm",
+    "searchAccessibilityLabel": "Tìm kiếm tùy chọn",
+    "clearSearch": "Xóa tìm kiếm",
+    "columnAccessibilityLabel": "Cột {column}",
+    "previousOptionAccessibilityLabel": "Tùy chọn trước trong cột {column}",
+    "nextOptionAccessibilityLabel": "Tùy chọn tiếp theo trong cột {column}"
   }
 }
