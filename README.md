@@ -3,9 +3,11 @@
 ## A modal picker for React Native on Android, iOS, and Web. Features up to 3 configurable columns, optional search, theming, and localization. Easy to adapt to any design
 
 [![npm version](https://img.shields.io/npm/v/react-native-multicolumn-modal-picker?logo=npm&logoColor=white)](https://www.npmjs.com/package/react-native-multicolumn-modal-picker)
-[![monthly downloads](https://img.shields.io/npm/dm/react-native-multicolumn-modal-picker?label=monthly%20downloads)](https://www.npmjs.com/package/react-native-multicolumn-modal-picker)
+[![downloads](https://img.shields.io/npm/dm/react-native-multicolumn-modal-picker?label=downloads)](https://www.npmjs.com/package/react-native-multicolumn-modal-picker)
 [![license](https://img.shields.io/npm/l/react-native-multicolumn-modal-picker)](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/LICENSE)
 [![Platforms: Android, iOS, Web](https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/platforms-supported.svg)](https://github.com/iamRio/react-native-multicolumn-modal-picker)
+[![Support on Patreon](https://img.shields.io/badge/support-Patreon-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/rio_fores)
+[![Support on Ko-fi](https://img.shields.io/badge/support-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/rio_fores)
 
 [**▶ Download Fores Play for Android and try the picker (APK)**](https://github.com/iamRio/react-native-multicolumn-modal-picker/releases/download/fores-play-apk/fores-play.apk)
 
@@ -441,3 +443,15 @@ If this package is useful, consider giving it a [star on GitHub](https://github.
 ## License
 
 MIT. See [LICENSE](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/LICENSE)
+
+## Support
+
+If you find `react-native-multicolumn-modal-picker` useful, consider supporting its development:
+
+- Become a sponsor on [Patreon](https://www.patreon.com/rio_fores)
+- Support the project on [Ko-fi](https://ko-fi.com/rio_fores)
+
+### Hall of Fame & Backer Credits 🏆
+
+_Backers at US$10/month or more will be recognized here with their chosen name and link._
+_(Special thanks to our early supporters)._

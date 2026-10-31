@@ -4,6 +4,16 @@
   "description": "A highly customizable multi-column modal picker for React Native (Android, iOS, and Web).",
   "license": "MIT",
   "author": "Marcos A. Del Río Rodríguez <marcosdelrio.dev@gmail.com>",
+  "funding": [
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/rio_fores"
+    },
+    {
+      "type": "ko-fi",
+      "url": "https://ko-fi.com/rio_fores"
+    }
+  ],
   "type": "commonjs",
   "sideEffects": false,
   "main": "dist/index.js",
