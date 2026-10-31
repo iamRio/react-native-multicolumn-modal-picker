@@ -1,6 +1,6 @@
 {
   "name": "react-native-multicolumn-modal-picker",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A highly customizable multi-column modal picker for React Native (Android, iOS, and Web).",
   "license": "MIT",
   "author": "Marcos A. Del Río Rodríguez <marcosdelrio.dev@gmail.com>",
