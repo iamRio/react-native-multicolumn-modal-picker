@@ -12,6 +12,10 @@
       <stop stop-color="#E8D9C6"/>
       <stop offset="1" stop-color="#D6C1A7"/>
     </linearGradient>
+    <linearGradient id="featureBackground" x1="86" y1="42" x2="1502" y2="1042" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2B211B"/>
+      <stop offset="1" stop-color="#17120F"/>
+    </linearGradient>
     <filter id="phoneShadow" x="1025" y="12" width="558" height="1056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feGaussianBlur in="SourceAlpha" stdDeviation="17" result="blur"/>
       <feOffset in="blur" dy="12" result="offsetBlur"/>
@@ -37,48 +41,50 @@
     <circle cx="1420" cy="170" r="102" stroke="#E8D3B9" stroke-opacity=".07"/>
   </g>
 
-  <text x="88" y="104" fill="#D6A36B" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="3.2">FEATURES</text>
-  <path d="M88 135H880" stroke="#E8D3B9" stroke-opacity=".17"/>
+  <path d="M28 0H1000V1060H28A28 28 0 0 1 0 1032V28A28 28 0 0 1 28 0Z" fill="url(#featureBackground)"/>
+  <g transform="translate(0 42)">
+  <text x="88" y="52" fill="#D6A36B" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="3.2">FEATURES</text>
+  <path d="M88 80H930" stroke="#E8D3B9" stroke-opacity=".17"/>
 
-  <rect x="88" y="170" width="4" height="64" rx="2" fill="#D6A36B"/>
-  <text x="116" y="198" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700">Multi-column selection</text>
-  <text x="116" y="228" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="19">configure up to three columns in one picker.</text>
-  <path d="M88 258H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+  <rect x="88" y="103" width="4" height="64" rx="2" fill="#D6A36B"/>
+  <text x="116" y="129" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Multi-column selection</text>
+  <text x="116" y="173" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="33">Up to three columns in one picker.</text>
+  <path d="M88 190H930" stroke="#E8D3B9" stroke-opacity=".15"/>
 
-  <circle cx="90" cy="298" r="3" fill="#D6A36B"/>
-  <text x="112" y="306" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Made to fit your app</text>
-  <text x="112" y="334" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">customize the layout, controls, and appearance.</text>
-  <path d="M88 360H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+  <circle cx="90" cy="245" r="3.5" fill="#D6A36B"/>
+  <text x="112" y="239" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Made to fit your app</text>
+  <text x="112" y="283" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="33">Customize layout, controls and appearance.</text>
+  <path d="M88 300H930" stroke="#E8D3B9" stroke-opacity=".15"/>
 
-  <circle cx="90" cy="400" r="3" fill="#D6A36B"/>
-  <text x="112" y="408" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Consistent across platforms</text>
-  <text x="112" y="436" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">one cohesive design for Android, iOS, and Web.</text>
-  <path d="M88 462H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+  <circle cx="90" cy="355" r="3.5" fill="#D6A36B"/>
+  <text x="112" y="349" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Android, iOS, and Web</text>
+  <text x="112" y="393" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="33">One cohesive experience across platforms.</text>
+  <path d="M88 410H930" stroke="#E8D3B9" stroke-opacity=".15"/>
 
-  <circle cx="90" cy="502" r="3" fill="#D6A36B"/>
-  <text x="112" y="510" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Optional search</text>
-  <text x="112" y="538" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">enable it for single-column pickers.</text>
-  <path d="M88 564H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+  <circle cx="90" cy="465" r="3.5" fill="#D6A36B"/>
+  <text x="112" y="459" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Optional search</text>
+  <text x="112" y="503" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="33">Available for single-column pickers.</text>
+  <path d="M88 520H930" stroke="#E8D3B9" stroke-opacity=".15"/>
 
-  <circle cx="90" cy="604" r="3" fill="#D6A36B"/>
-  <text x="112" y="612" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Responsive layout</text>
-  <text x="112" y="640" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">adapts to different screen sizes and orientations.</text>
-  <path d="M88 666H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+  <circle cx="90" cy="575" r="3.5" fill="#D6A36B"/>
+  <text x="112" y="569" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Responsive layout</text>
+  <text x="112" y="613" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="33">Adapts to different screens and orientations.</text>
+  <path d="M88 630H930" stroke="#E8D3B9" stroke-opacity=".15"/>
 
-  <circle cx="90" cy="706" r="3" fill="#D6A36B"/>
-  <text x="112" y="714" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Smooth with large lists</text>
-  <text x="112" y="742" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">optimized for responsive selection.</text>
-  <path d="M88 768H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+  <circle cx="90" cy="685" r="3.5" fill="#D6A36B"/>
+  <text x="112" y="679" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Large-list performance</text>
+  <text x="112" y="723" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="33">Smooth scrolling through long option lists.</text>
+  <path d="M88 740H930" stroke="#E8D3B9" stroke-opacity=".15"/>
 
-  <circle cx="90" cy="808" r="3" fill="#D6A36B"/>
-  <text x="112" y="816" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">29 built-in translations</text>
-  <text x="112" y="844" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">automatic system-language detection,</text>
-  <text x="112" y="870" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">with support for custom text.</text>
-  <path d="M88 896H880" stroke="#E8D3B9" stroke-opacity=".15"/>
+  <circle cx="90" cy="795" r="3.5" fill="#D6A36B"/>
+  <text x="112" y="789" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Localization support</text>
+  <text x="112" y="833" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="33">System locale detection and app-provided translations.</text>
+  <path d="M88 850H930" stroke="#E8D3B9" stroke-opacity=".15"/>
 
-  <circle cx="90" cy="936" r="3" fill="#D6A36B"/>
-  <text x="112" y="944" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Small footprint by design</text>
-  <text x="112" y="972" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="18">~34 KB packed, with no bundled dependencies.</text>
+  <circle cx="90" cy="905" r="3.5" fill="#D6A36B"/>
+  <text x="112" y="899" fill="#F6F0E7" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Small footprint</text>
+  <text x="112" y="943" fill="#C9BCAF" font-family="Arial, Helvetica, sans-serif" font-size="33">~34 KB packed. No bundled dependencies.</text>
+  </g>
 
   <g filter="url(#phoneShadow)">
     <rect x="1068" y="28" width="472" height="1000" rx="66" fill="#080B10"/>
