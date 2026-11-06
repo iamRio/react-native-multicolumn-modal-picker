@@ -1,5 +1,6 @@
 node_modules/
 .vscode/
 dist/
+coverage/
 *.tgz
 /RELEASE-LOCAL.md

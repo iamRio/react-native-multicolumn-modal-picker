@@ -49,7 +49,7 @@ export type PickerLocale =
   | "vi";
 
 /** @deprecated Use "bottom" with `showSubmitButton={false}` instead. */
-export type DeprecatedCancelActionButtonsPosition = "cancel";
+type DeprecatedCancelActionButtonsPosition = "cancel";
 
 export type ActionButtonsPosition =
   "top" | "bottom" | "none" | DeprecatedCancelActionButtonsPosition;
@@ -586,10 +586,7 @@ export type PickerWheelItemProps = {
   itemTextColor: string;
 };
 
-export type PickerChangeHandler = (
-  value: PickerValue | null,
-  index?: number,
-) => void;
+type PickerChangeHandler = (value: PickerValue | null, index?: number) => void;
 
 export type PickerColumnsProps = {
   columns: [PickerColumn, PickerColumn?, PickerColumn?];
@@ -637,7 +634,7 @@ export type SearchBarProps = {
   onBlur: () => void;
 };
 
-export type KeyboardTarget = {
+type KeyboardTarget = {
   tagName?: string;
   isContentEditable?: boolean;
   parentElement?: KeyboardTarget | null;

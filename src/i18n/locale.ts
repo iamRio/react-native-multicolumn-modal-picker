@@ -2,7 +2,7 @@ import { NativeModules, Platform } from "react-native";
 import type { PickerLocale } from "../types";
 import { SUPPORTED_LOCALES, translations } from "./translations";
 
-export { SUPPORTED_LOCALES, translations };
+export { translations };
 
 const supportedLocaleMap: Record<string, PickerLocale> = {
   en: "en",

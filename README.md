@@ -4,6 +4,8 @@
 
 [![npm version](https://img.shields.io/npm/v/react-native-multicolumn-modal-picker?logo=npm&logoColor=white)](https://www.npmjs.com/package/react-native-multicolumn-modal-picker)
 [![downloads](https://img.shields.io/npm/dm/react-native-multicolumn-modal-picker?label=downloads)](https://www.npmjs.com/package/react-native-multicolumn-modal-picker)
+[![CI](https://github.com/iamRio/react-native-multicolumn-modal-picker/actions/workflows/npm-publish.yml/badge.svg?branch=main)](https://github.com/iamRio/react-native-multicolumn-modal-picker/actions/workflows/npm-publish.yml)
+[![codecov](https://codecov.io/gh/iamRio/react-native-multicolumn-modal-picker/branch/main/graph/badge.svg)](https://codecov.io/gh/iamRio/react-native-multicolumn-modal-picker)
 [![license](https://img.shields.io/npm/l/react-native-multicolumn-modal-picker?color=green)](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/LICENSE)
 [![Platforms: Android, iOS, Web](https://img.shields.io/badge/Platforms-Android%20%7C%20iOS%20%7C%20Web-8B5CF6)](https://github.com/iamRio/react-native-multicolumn-modal-picker)
 [![Support on Patreon](https://img.shields.io/badge/support-Patreon-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/rio_fores)
@@ -364,6 +366,10 @@ All configurable border-radius props default to `10`. `actionButtonsBorderRadius
 Norwegian Nynorsk (`nn`) is detected automatically and uses the Norwegian (`nb`) translation. To select Norwegian explicitly with `locale`, use `nb`.
 
 The built-in locales are defaults, not a limitation. If your app already uses another language or an i18n library, pass its translated values directly through `submitButtonText`, `cancelButtonText`, and `searchPlaceholder`. To override automatic locale selection, set `locale="es"` on the picker.
+
+## Tests and coverage
+
+Run the unit tests with `npm test`. Run them with coverage using `npm run test:coverage`; this writes an LCOV report to `coverage/lcov.info`. Coverage includes all executable code under `src` and enforces 100% statements, branches, functions, and lines; type-only declarations are excluded because they produce no runtime code. CI runs formatting checks, type checking, linting, and tests with coverage on every push and pull request, then uploads the LCOV report to Codecov. To require these checks before merging, protect the `main` branch and require the `validate` status check.
 
 ### Theme and custom color schemes
 
