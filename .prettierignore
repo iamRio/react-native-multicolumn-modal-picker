@@ -1,5 +1,7 @@
 node_modules/
 dist/
+coverage/
+package-lock.json
 .github/
 .vscode/
 fores-play/node_modules/

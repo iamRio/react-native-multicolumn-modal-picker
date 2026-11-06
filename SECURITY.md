@@ -4,10 +4,10 @@
 
 Security updates are provided for the latest release in the 1.2.x line.
 
-| Version | Supported |
-| ------- | --------- |
+| Version | Supported          |
+| ------- | ------------------ |
 | 1.2.x   | :white_check_mark: |
-| < 1.2   | :x: |
+| < 1.2   | :x:                |
 
 Please upgrade to the latest supported release before reporting an issue when possible.
 
