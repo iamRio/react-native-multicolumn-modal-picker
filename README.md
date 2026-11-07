@@ -40,13 +40,13 @@ The web demo is a quick way to try the picker in your browser. Its appearance an
   </tr>
   <tr>
     <td width="33%" align="center" valign="middle">
-      <img src="./assets/picker-android.gif" alt="Three-column picker running on Android" width="100%" /><br/>
+      <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-android.gif" alt="Three-column picker running on Android" width="100%" /><br/>
     </td>
     <td width="33%" align="center" valign="middle">
-      <img src="./assets/picker-ios.gif" alt="Native iOS picker with search" width="100%" /><br/>
+      <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-ios.gif" alt="Native iOS picker with search" width="100%" /><br/>
     </td>
     <td width="33%" align="center" valign="middle">
-      <img src="./assets/picker-web.gif" alt="Two-column picker running in a web browser" width="100%" /><br/>
+      <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-web.gif" alt="Two-column picker running in a web browser" width="100%" /><br/>
     </td>
   </tr>
   <tr>
