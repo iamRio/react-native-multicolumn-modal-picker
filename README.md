@@ -26,41 +26,12 @@ The web demo is a quick way to try the picker in your browser. Its appearance an
 ## See it in action
 
 <!-- markdownlint-disable MD033 -->
-<table width="100%">
-  <tr>
-    <td width="33%" align="center" valign="middle">
-      <img src="https://img.shields.io/badge/ANDROID-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android" height="28" /><br/>
-    </td>
-    <td width="33%" align="center" valign="middle">
-      <img src="https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="iOS" height="28" /><br/>
-    </td>
-    <td width="33%" align="center" valign="middle">
-      <img src="https://img.shields.io/badge/WEB-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Web" height="28" /><br/>
-    </td>
-  </tr>
-  <tr>
-    <td width="33%" align="center" valign="middle">
-      <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-android.gif" alt="Three-column picker running on Android" width="100%" /><br/>
-    </td>
-    <td width="33%" align="center" valign="middle">
-      <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-ios.gif" alt="Native iOS picker with search" width="100%" /><br/>
-    </td>
-    <td width="33%" align="center" valign="middle">
-      <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-web.gif" alt="Two-column picker running in a web browser" width="100%" /><br/>
-    </td>
-  </tr>
-  <tr>
-    <td width="33%" align="center" valign="middle">
-      <sub>Three configurable columns</sub>
-    </td>
-    <td width="33%" align="center" valign="middle">
-      <sub>Native picker with search</sub>
-    </td>
-    <td width="33%" align="center" valign="middle">
-      <sub>Two columns in the browser</sub>
-    </td>
-  </tr>
-</table>
+
+|                         <img src="https://img.shields.io/badge/ANDROID-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android" height="28" />                         |                       <img src="https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="iOS" height="28" />                        |                          <img src="https://img.shields.io/badge/WEB-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Web" height="28" />                           |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-android.gif" alt="Three-column picker running on Android" width="220" /> | <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-ios.gif" alt="Native iOS picker with search" width="220" /> | <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-web.gif" alt="Two-column picker running in a web browser" width="220" /> |
+|                                                                              Three configurable columns                                                                              |                                                                        Native picker with search                                                                        |                                                                              Two columns in the browser                                                                              |
+
 <!-- markdownlint-enable MD033 -->
 
 ## Requirements
