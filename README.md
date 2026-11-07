@@ -26,23 +26,23 @@ The web demo is a quick way to try the picker in your browser. Its appearance an
 ## See it in action
 
 <!-- markdownlint-disable MD033 -->
-<p align="center">
-  <span style="display: inline-block; vertical-align: top; margin: 8px;">
+<div align="center" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;">
+  <div align="center" style="flex: 1 1 220px; max-width: 220px; text-align: center;">
     <img src="https://img.shields.io/badge/ANDROID-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android" height="28" /><br/>
     <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-android.gif" alt="Three-column picker running on Android" width="220" /><br/>
     <sub>Three configurable columns</sub>
-  </span>
-  <span style="display: inline-block; vertical-align: top; margin: 8px;">
+  </div>
+  <div align="center" style="flex: 1 1 220px; max-width: 220px; text-align: center;">
     <img src="https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="iOS" height="28" /><br/>
     <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-ios.gif" alt="Native iOS picker with search" width="220" /><br/>
     <sub>Native picker with search</sub>
-  </span>
-  <span style="display: inline-block; vertical-align: top; margin: 8px;">
+  </div>
+  <div align="center" style="flex: 1 1 220px; max-width: 220px; text-align: center;">
     <img src="https://img.shields.io/badge/WEB-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Web" height="28" /><br/>
     <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-web.gif" alt="Two-column picker running in a web browser" width="220" /><br/>
     <sub>Two columns in the browser</sub>
-  </span>
-</p>
+  </div>
+</div>
 <!-- markdownlint-enable MD033 -->
 
 ## Requirements
