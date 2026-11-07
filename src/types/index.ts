@@ -52,7 +52,15 @@ export type PickerLocale =
 type DeprecatedCancelActionButtonsPosition = "cancel";
 
 export type ActionButtonsPosition =
-  "top" | "bottom" | "none" | DeprecatedCancelActionButtonsPosition;
+  | "top"
+  | "bottom"
+  | "bottomInline"
+  | "none"
+  | DeprecatedCancelActionButtonsPosition;
+
+export type PickerModalPosition = "bottom" | "center" | "top";
+
+export type PickerModalAnimationType = "none" | "slide" | "fade";
 
 export type PickerThemeMode = "light" | "dark" | "auto";
 
@@ -62,6 +70,7 @@ export type PickerPalette = {
   modalBackground: string;
   overlay: string;
   border: string;
+  divider?: string;
   buttonText: string;
   columnNavigationButtons: string;
   cancelButtonText: string;
@@ -224,9 +233,10 @@ export type MultiColumnModalPickerProps = {
   /**
    * Position of the action buttons.
    *
-   * `"top"` renders visible actions inside the modal, `"bottom"` renders the
-   * submit action inside and the cancel action outside, and `"none"` renders
-   * no action buttons.
+   * `"top"` renders visible actions in a row above the picker content,
+   * `"bottom"` renders the submit action inside and the cancel action outside,
+   * `"bottomInline"` renders visible actions in a row below the picker content,
+   * and `"none"` renders no action buttons.
    *
    * The `"cancel"` value is deprecated but remains supported for compatibility.
    * Use `"bottom"` with `showSubmitButton={false}` to render only cancel.
@@ -234,6 +244,9 @@ export type MultiColumnModalPickerProps = {
   actionButtonsPosition?: ActionButtonsPosition;
   /**
    * Whether to render the submit button in the selected action layout.
+   *
+   * Backdrop behavior is mutually exclusive: when Submit is rendered, tapping
+   * outside cancels; when it is hidden, tapping outside submits.
    *
    * Type: boolean.
    * Default: true. For the deprecated `actionButtonsPosition="cancel"` value,
@@ -283,6 +296,25 @@ export type MultiColumnModalPickerProps = {
    * Default: 10.
    */
   modalBorderRadius?: number;
+  /**
+   * Native modal transition used when showing or hiding the picker.
+   *
+   * Type: "none" | "slide" | "fade".
+   * Default: "slide".
+   * The transition applies to the native modal window, not only the picker
+   * panel. The separate backdrop fades for "slide" and "fade"; it appears and
+   * disappears immediately for "none".
+   */
+  modalAnimationType?: PickerModalAnimationType;
+  /**
+   * Vertical position of the picker and its detached action button.
+   *
+   * Type: "bottom" | "center" | "top".
+   * Default: "bottom" on compact layouts and "center" on wide layouts.
+   * The responsive default preserves the existing layout. This prop does not
+   * conflict with `actionButtonsPosition`.
+   */
+  modalPosition?: PickerModalPosition;
   /**
    * @deprecated Use `columns` instead.
    * Used only when the corresponding slot in `columns` is undefined.
@@ -509,12 +541,18 @@ export type MultiColumnModalPickerProps = {
   /**
    * Called when the user submits the current selection.
    *
+   * When no submit button is rendered, tapping outside the picker also submits.
+   * When Submit is rendered, tapping outside follows the cancel flow instead.
+   *
    * Signature: () => void.
    * Default: none.
    */
   onSubmit?: () => void;
   /**
    * Called when the user cancels without submitting.
+   *
+   * When Submit is rendered, tapping outside the picker follows the cancel
+   * flow and calls this callback before `onClose`.
    *
    * Signature: () => void.
    * Default: none.

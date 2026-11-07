@@ -9,6 +9,8 @@ export type {
   PickerColumnValueChangeHandler,
   PickerItem,
   PickerLocale,
+  PickerModalAnimationType,
+  PickerModalPosition,
   PickerPalette,
   PickerThemeMode,
   PickerThemeName,

@@ -24,6 +24,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type {
   MultiColumnModalPickerProps,
+  PickerModalPosition,
   PickerColumn,
   PickerValue,
   WebGlobal,
@@ -39,6 +40,14 @@ import { pickerTokens } from "../constants/tokens";
 import { columnNavigationControlHeight } from "./PickerColumnNavigationButtons";
 
 const emptyColumn: PickerColumn = [];
+const modalPositionAlignment: Record<
+  PickerModalPosition,
+  "flex-end" | "center" | "flex-start"
+> = {
+  bottom: "flex-end",
+  center: "center",
+  top: "flex-start",
+};
 
 const validateSearchMaxLength = (value: number | null): number | null => {
   if (value !== null && (!Number.isSafeInteger(value) || value <= 0)) {
@@ -94,6 +103,8 @@ const MultiColumnModalPickerContent = ({
   onSearchFocus,
   onSearchBlur,
   modalBorderRadius = pickerTokens.radius.default,
+  modalAnimationType = "slide",
+  modalPosition,
   searchBarBorderRadius = pickerTokens.radius.default,
   searchClearButtonBorderRadius = pickerTokens.radius.default,
   actionButtonsBorderRadius = pickerTokens.radius.default,
@@ -112,11 +123,20 @@ const MultiColumnModalPickerContent = ({
 }: MultiColumnModalPickerProps) => {
   const resolvedSearchMaxLength = validateSearchMaxLength(searchMaxLength);
   const searchRef = useRef<ComponentRef<typeof TextInput>>(null);
-  const overlayOpacity = useRef(new Animated.Value(0)).current;
-  const pickerTranslateY = useRef(new Animated.Value(0)).current;
-  const modalAnimationId = useRef(0);
+  const overlayOpacity = useRef(
+    new Animated.Value(visible && modalAnimationType === "none" ? 1 : 0),
+  ).current;
+  const overlayAnimationId = useRef(0);
+  const overlayModalPresented = useRef(false);
+  const overlayModalVisibleRef = useRef(visible);
+  const visibleRef = useRef(visible);
   const colorScheme = useColorScheme();
   const [isTouchOrHybridDevice, setIsTouchOrHybridDevice] = useState(false);
+  const [overlayModalVisible, setOverlayModalVisible] = useState(visible);
+  const [pickerModalVisible, setPickerModalVisible] = useState(false);
+  useLayoutEffect(() => {
+    visibleRef.current = visible;
+  }, [visible]);
   useEffect(() => {
     if (Platform.OS !== "web") return;
 
@@ -170,6 +190,9 @@ const MultiColumnModalPickerContent = ({
   const isLandscape = windowWidth > windowHeight;
   const isWideScreen =
     isLandscape || Math.min(windowWidth, windowHeight) >= 600;
+  const resolvedModalPosition: PickerModalPosition =
+    modalPosition ?? (isWideScreen ? "center" : "bottom");
+  const modalVerticalAlignment = modalPositionAlignment[resolvedModalPosition];
   const actionButtonHeight = isLandscape
     ? Math.max(
         pickerTokens.layout.landscapeActionButtonMinHeight,
@@ -188,9 +211,6 @@ const MultiColumnModalPickerContent = ({
   const cancelButtonContainerMarginTop = isLandscape
     ? pickerTokens.layout.landscapeCancelButtonContainerMarginTop
     : pickerTokens.layout.cancelButtonContainerMarginTop;
-  const windowHeightRef = useRef(windowHeight);
-  windowHeightRef.current = windowHeight;
-
   const legacyColorOverrides = useMemo(
     () => ({
       modalBackground: bgColor,
@@ -212,6 +232,7 @@ const MultiColumnModalPickerContent = ({
     colorScheme,
     legacyColorOverrides,
   });
+  const dividerColor = colors.divider;
 
   const resolvedLocale = resolveLocale(locale);
   const localizedTexts = translations[resolvedLocale];
@@ -238,7 +259,6 @@ const MultiColumnModalPickerContent = ({
 
     return [resolveVisibility(0), resolveVisibility(1), resolveVisibility(2)];
   }, [isTouchOrHybridDevice, showColumnNavigationButtons]);
-
   const singleActiveColumn = useMemo<[number, PickerColumn] | undefined>(() => {
     const candidates: Array<[number, PickerColumn | undefined]> = [
       [0, column1],
@@ -280,6 +300,9 @@ const MultiColumnModalPickerContent = ({
   const shouldShowTopButtons =
     resolvedActionButtons === "top" &&
     (shouldShowSubmitButton || shouldShowCancelButton);
+  const shouldShowBottomInlineButtons =
+    resolvedActionButtons === "bottomInline" &&
+    (shouldShowSubmitButton || shouldShowCancelButton);
   const shouldShowBottomSubmitButton =
     (resolvedActionButtons === "bottom" || isLegacyCancelPosition) &&
     shouldShowSubmitButton;
@@ -290,6 +313,7 @@ const MultiColumnModalPickerContent = ({
     shouldShowSubmitButton &&
     (resolvedActionButtons === "top" ||
       resolvedActionButtons === "bottom" ||
+      resolvedActionButtons === "bottomInline" ||
       isLegacyCancelPosition);
   const showSearchBar = (enableSearch || searchBar) && isSingleColumn;
   const controlsHeight =
@@ -301,6 +325,11 @@ const MultiColumnModalPickerContent = ({
       : 0) +
     (showSearchBar
       ? searchTopMargin + pickerTokens.layout.searchInputMinHeight
+      : 0) +
+    (shouldShowBottomInlineButtons
+      ? actionButtonHeight +
+        pickerTokens.spacing.xl +
+        pickerTokens.spacing.lg * 2
       : 0) +
     (shouldShowBottomSubmitButton ? actionButtonHeight : 0) +
     (shouldShowDetachedCancelButton
@@ -356,52 +385,53 @@ const MultiColumnModalPickerContent = ({
   }, [searchableItems]);
 
   const [searchValue, setSearchValue] = useState("");
-  const [modalVisible, setModalVisible] = useState(visible);
 
   useEffect(() => {
-    const animationId = ++modalAnimationId.current;
+    const animationId = ++overlayAnimationId.current;
 
     overlayOpacity.stopAnimation();
-    pickerTranslateY.stopAnimation();
 
     if (visible) {
-      setModalVisible(true);
-      pickerTranslateY.setValue(windowHeightRef.current);
-      Animated.timing(overlayOpacity, {
-        toValue: 1,
-        duration: 220,
-        useNativeDriver: Platform.OS !== "web",
-      }).start();
-      Animated.timing(pickerTranslateY, {
-        toValue: 0,
-        duration: 220,
-        useNativeDriver: Platform.OS !== "web",
-      }).start();
-    } else {
-      Animated.parallel([
+      overlayModalVisibleRef.current = true;
+      setOverlayModalVisible(true);
+      setPickerModalVisible(
+        Platform.OS === "web" || overlayModalPresented.current,
+      );
+      if (modalAnimationType === "none") {
+        overlayOpacity.setValue(1);
+      } else {
         Animated.timing(overlayOpacity, {
-          toValue: 0,
-          duration: 180,
+          toValue: 1,
+          duration: 220,
           useNativeDriver: Platform.OS !== "web",
-        }),
-        Animated.timing(pickerTranslateY, {
-          toValue: windowHeightRef.current,
-          duration: 180,
-          useNativeDriver: Platform.OS !== "web",
-        }),
-      ]).start(({ finished }) => {
-        if (finished && animationId === modalAnimationId.current) {
-          setModalVisible(false);
+        }).start();
+      }
+    } else if (modalAnimationType === "none") {
+      overlayOpacity.setValue(0);
+      overlayModalVisibleRef.current = false;
+      overlayModalPresented.current = false;
+      setPickerModalVisible(false);
+      setOverlayModalVisible(false);
+    } else {
+      Animated.timing(overlayOpacity, {
+        toValue: 0,
+        duration: 180,
+        useNativeDriver: Platform.OS !== "web",
+      }).start(({ finished }) => {
+        if (finished && animationId === overlayAnimationId.current) {
+          overlayModalVisibleRef.current = false;
+          overlayModalPresented.current = false;
+          setOverlayModalVisible(false);
         }
       });
+      setPickerModalVisible(false);
     }
 
     return () => {
-      modalAnimationId.current += 1;
+      overlayAnimationId.current += 1;
       overlayOpacity.stopAnimation();
-      pickerTranslateY.stopAnimation();
     };
-  }, [overlayOpacity, pickerTranslateY, visible]);
+  }, [modalAnimationType, overlayOpacity, visible]);
 
   const columns = useMemo<[PickerColumn, PickerColumn?, PickerColumn?]>(
     () => [column1, column2, column3],
@@ -642,309 +672,407 @@ const MultiColumnModalPickerContent = ({
     setSearchValue("");
   }, [searchColumnIndex]);
 
+  const handleOverlayModalShow = useCallback(() => {
+    if (!overlayModalVisibleRef.current) return;
+    overlayModalPresented.current = true;
+    if (visibleRef.current) setPickerModalVisible(true);
+  }, []);
+
+  const handleOverlayModalRequestClose = useCallback(() => {
+    if (visibleRef.current) handleCancel();
+  }, [handleCancel]);
+
   return (
-    <Modal
-      animationType="none"
-      transparent
-      visible={modalVisible}
-      statusBarTranslucent={Platform.OS === "android"}
-      navigationBarTranslucent={Platform.OS === "android"}
-      onRequestClose={handleCancel}
-    >
-      <KeyboardAvoidingView
-        behavior="padding"
-        enabled={showSearchBar}
-        pointerEvents={visible ? "auto" : "none"}
-        style={[
-          styles.modalContentContainer,
-          isWideScreen && {
-            justifyContent: "center",
-            paddingTop: insets.top,
-            paddingBottom: insets.bottom,
-            paddingHorizontal: Math.max(insets.left, insets.right),
-          },
-        ]}
+    <>
+      <Modal
+        animationType="none"
+        transparent
+        visible={overlayModalVisible}
+        statusBarTranslucent={Platform.OS === "android"}
+        navigationBarTranslucent={Platform.OS === "android"}
+        onShow={handleOverlayModalShow}
+        onRequestClose={handleOverlayModalRequestClose}
       >
-        <Animated.View
+        <View
           pointerEvents="none"
+          accessible={false}
+          importantForAccessibility="no"
+          style={styles.modalContentContainer}
+        >
+          <Animated.View
+            pointerEvents="none"
+            style={[
+              styles.modalBackdrop,
+              { backgroundColor: colors.overlay, opacity: overlayOpacity },
+            ]}
+          />
+        </View>
+      </Modal>
+      <Modal
+        animationType={modalAnimationType}
+        transparent
+        visible={pickerModalVisible}
+        statusBarTranslucent={Platform.OS === "android"}
+        navigationBarTranslucent={Platform.OS === "android"}
+        onRequestClose={handleCancel}
+      >
+        <KeyboardAvoidingView
+          behavior="padding"
+          enabled={showSearchBar}
+          pointerEvents={visible ? "auto" : "none"}
           style={[
-            styles.modalBackdrop,
-            { backgroundColor: colors.overlay, opacity: overlayOpacity },
-          ]}
-        />
-        <Pressable
-          style={styles.modalBackdrop}
-          onPress={handleSubmit}
-          accessibilityRole="button"
-          accessibilityLabel={resolvedSubmitButtonText}
-        />
-        <Animated.View
-          style={[
-            styles.modalMainContainer,
-            { transform: [{ translateY: pickerTranslateY }] },
+            styles.modalContentContainer,
             {
-              paddingBottom: modalBottomInset,
+              justifyContent: modalVerticalAlignment,
+              paddingTop: insets.top,
+            },
+            isWideScreen && {
+              paddingBottom: insets.bottom,
+              paddingHorizontal: Math.max(insets.left, insets.right),
             },
           ]}
         >
+          <Pressable
+            style={styles.modalBackdrop}
+            onPress={hasVisibleSubmitButton ? handleCancel : handleSubmit}
+            accessibilityRole="button"
+            accessibilityLabel={
+              hasVisibleSubmitButton
+                ? resolvedCancelButtonText
+                : resolvedSubmitButtonText
+            }
+          />
           <View
             style={[
-              styles.pickerWrapperStyle,
+              styles.modalMainContainer,
               {
-                backgroundColor: colors.modalBackground,
-                borderRadius: modalBorderRadius,
+                paddingBottom: modalBottomInset,
               },
             ]}
           >
-            {shouldShowTopButtons && (
-              <View
-                style={[
-                  styles.buttonsContainer,
-                  {
-                    borderBottomColor: colors.border,
-                    minHeight: actionButtonHeight,
-                  },
-                ]}
-              >
-                {shouldShowCancelButton && (
-                  <TouchableOpacity
-                    style={[
-                      styles.topCancelButton,
-                      {
-                        minHeight: actionButtonHeight,
-                        justifyContent: "center",
-                      },
-                      cancelButtonContainerStyle,
-                    ]}
-                    onPress={handleCancel}
-                    accessibilityRole="button"
-                    accessibilityLabel={resolvedCancelButtonText}
-                  >
-                    <Text
-                      style={[
-                        styles.mainText,
-                        styles.topCancelButtonText,
-                        { color: colors.cancelButtonText },
-                        cancelButtonTextStyle,
-                      ]}
-                    >
-                      {resolvedCancelButtonText}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-                {shouldShowSubmitButton && (
-                  <TouchableOpacity
-                    style={[
-                      styles.acceptBtn,
-                      {
-                        minHeight: actionButtonHeight,
-                        justifyContent: "center",
-                      },
-                      submitButtonContainerStyle,
-                    ]}
-                    onPress={handleSubmit}
-                    accessibilityRole="button"
-                    accessibilityLabel={resolvedSubmitButtonText}
-                  >
-                    <Text
-                      style={[
-                        styles.mainText,
-                        styles.topAcceptButtonText,
-                        { color: colors.buttonText },
-                        legacyAcceptButtonTextStyle,
-                        submitButtonTextStyle,
-                      ]}
-                    >
-                      {resolvedSubmitButtonText}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-            )}
-
-            {title && (
-              <View
-                style={[
-                  styles.titleView,
-                  {
-                    borderBottomColor: colors.border,
-                    paddingVertical: titleVerticalPadding,
-                  },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.titleText,
-                    { color: colors.secondaryText },
-                    titleStyle,
-                  ]}
-                >
-                  {title}
-                </Text>
-              </View>
-            )}
-
-            {showSearchBar && (
-              <SearchBar
-                backgroundColor={colors.searchBackground}
-                clearButtonColor={colors.searchClearBackground}
-                clearTextColor={colors.searchClearText}
-                inputColor={colors.inputText}
-                inputRef={searchRef}
-                onBlur={() => {
-                  onSearchBlur?.();
-                }}
-                onChangeText={handleSearch}
-                onClear={handleClearSearch}
-                onFocus={onSearchFocus}
-                placeholder={resolvedSearchPlaceholder}
-                accessibilityLabel={localizedTexts.searchAccessibilityLabel}
-                clearButtonAccessibilityLabel={localizedTexts.clearSearch}
-                placeholderTextColor={colors.searchElements}
-                searchBarBorderRadius={searchBarBorderRadius}
-                searchClearButtonBorderRadius={searchClearButtonBorderRadius}
-                searchBoxStyle={[
-                  searchBoxStyle,
-                  isLandscape && { marginTop: searchTopMargin },
-                ]}
-                searchMaxLength={resolvedSearchMaxLength}
-                searchTextStyle={searchTextStyle}
-                searchValue={searchValue}
-              />
-            )}
-
-            <View style={[styles.pickerContentRow, { height: pickerHeight }]}>
-              {(Platform.OS === "android" || Platform.OS === "web") && (
-                <View
-                  pointerEvents="none"
-                  style={[
-                    styles.selectionHighlight,
-                    {
-                      backgroundColor: colors.selectionHighlight,
-                      borderRadius: selectionHighlightBorderRadius,
-                      height: selectionHighlightHeight,
-                      marginTop: -selectionHighlightHeight / 2,
-                    },
-                  ]}
-                />
-              )}
-              {resolvedHPadding !== undefined && resolvedHPadding > 0 && (
-                <View
-                  style={[
-                    styles.horizontalPaddingSpacer,
-                    { minWidth: resolvedHPadding },
-                  ]}
-                />
-              )}
-              <View style={styles.pickerColumnsContainer}>
-                <PickerColumns
-                  columns={columns}
-                  selectedValues={selectedValues}
-                  itemStyle={resolvedItemStyle}
-                  itemTextColor={colors.pickerItemText}
-                  columnNavigationButtonsColor={colors.columnNavigationButtons}
-                  columnAccessibilityLabel={
-                    localizedTexts.columnAccessibilityLabel
-                  }
-                  previousOptionAccessibilityLabel={
-                    localizedTexts.previousOptionAccessibilityLabel
-                  }
-                  nextOptionAccessibilityLabel={
-                    localizedTexts.nextOptionAccessibilityLabel
-                  }
-                  onValueChanges={onValueChanges}
-                  pickerHeight={pickerHeight}
-                  isSingleColumn={isSingleColumn}
-                  showColumnNavigationButtons={navigationButtonsByColumn}
-                  reserveColumnNavigationButtonSpace={navigationButtonsByColumn.some(
-                    Boolean,
-                  )}
-                />
-              </View>
-              {rightInfo && isSingleColumn && (
-                <View style={styles.rightInfoContainer}>
-                  <Text
-                    style={[
-                      styles.rightInfoText,
-                      {
-                        color: colors.rightInfoText,
-                      },
-                      rightInfoTextStyle,
-                    ]}
-                  >
-                    {rightInfo}
-                  </Text>
-                </View>
-              )}
-            </View>
-
-            {shouldShowBottomSubmitButton && (
-              <TouchableOpacity
-                style={[
-                  styles.buttonAlt,
-                  styles.acceptBtnAlt,
-                  { borderTopColor: colors.border },
-                  { minHeight: actionButtonHeight },
-                  submitButtonContainerStyle,
-                ]}
-                onPress={handleSubmit}
-                accessibilityRole="button"
-                accessibilityLabel={resolvedSubmitButtonText}
-              >
-                <Text
-                  style={[
-                    styles.mainText,
-                    styles.buttonAltText,
-                    { color: colors.buttonText },
-                    legacyAcceptButtonTextStyle,
-                    submitButtonTextStyle,
-                  ]}
-                >
-                  {resolvedSubmitButtonText}
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
-
-          {shouldShowDetachedCancelButton && (
             <View
               style={[
-                styles.buttonAltView,
+                styles.pickerWrapperStyle,
                 {
-                  backgroundColor:
-                    cancelButtonBgColor ?? colors.modalBackground,
-                  borderRadius: actionButtonsBorderRadius,
-                  minHeight: actionButtonHeight,
-                  marginTop: cancelButtonContainerMarginTop,
+                  backgroundColor: colors.modalBackground,
+                  borderRadius: modalBorderRadius,
                 },
               ]}
             >
-              <TouchableOpacity
-                style={[
-                  styles.buttonAlt,
-                  { minHeight: actionButtonHeight },
-                  cancelButtonContainerStyle,
-                ]}
-                onPress={handleCancel}
-                accessibilityRole="button"
-                accessibilityLabel={resolvedCancelButtonText}
-              >
-                <Text
+              {shouldShowTopButtons && (
+                <View
                   style={[
-                    styles.mainText,
-                    styles.buttonAltText,
-                    { color: colors.cancelText },
-                    cancelButtonTextStyle,
+                    styles.buttonsContainer,
+                    {
+                      borderBottomColor: dividerColor,
+                      minHeight: actionButtonHeight,
+                    },
                   ]}
                 >
-                  {resolvedCancelButtonText}
-                </Text>
-              </TouchableOpacity>
+                  {shouldShowCancelButton && (
+                    <TouchableOpacity
+                      style={[
+                        styles.topCancelButton,
+                        {
+                          minHeight: actionButtonHeight,
+                          justifyContent: "center",
+                        },
+                        cancelButtonContainerStyle,
+                      ]}
+                      onPress={handleCancel}
+                      accessibilityRole="button"
+                      accessibilityLabel={resolvedCancelButtonText}
+                    >
+                      <Text
+                        style={[
+                          styles.mainText,
+                          styles.topCancelButtonText,
+                          { color: colors.cancelButtonText },
+                          cancelButtonTextStyle,
+                        ]}
+                      >
+                        {resolvedCancelButtonText}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  {shouldShowSubmitButton && (
+                    <TouchableOpacity
+                      style={[
+                        styles.acceptBtn,
+                        {
+                          minHeight: actionButtonHeight,
+                          justifyContent: "center",
+                        },
+                        submitButtonContainerStyle,
+                      ]}
+                      onPress={handleSubmit}
+                      accessibilityRole="button"
+                      accessibilityLabel={resolvedSubmitButtonText}
+                    >
+                      <Text
+                        style={[
+                          styles.mainText,
+                          styles.topAcceptButtonText,
+                          { color: colors.buttonText },
+                          legacyAcceptButtonTextStyle,
+                          submitButtonTextStyle,
+                        ]}
+                      >
+                        {resolvedSubmitButtonText}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              )}
+
+              {title && (
+                <View
+                  style={[
+                    styles.titleView,
+                    {
+                      borderBottomColor: dividerColor,
+                      paddingVertical: titleVerticalPadding,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.titleText,
+                      { color: colors.secondaryText },
+                      titleStyle,
+                    ]}
+                  >
+                    {title}
+                  </Text>
+                </View>
+              )}
+
+              {showSearchBar && (
+                <SearchBar
+                  backgroundColor={colors.searchBackground}
+                  clearButtonColor={colors.searchClearBackground}
+                  clearTextColor={colors.searchClearText}
+                  inputColor={colors.inputText}
+                  inputRef={searchRef}
+                  onBlur={() => {
+                    onSearchBlur?.();
+                  }}
+                  onChangeText={handleSearch}
+                  onClear={handleClearSearch}
+                  onFocus={onSearchFocus}
+                  placeholder={resolvedSearchPlaceholder}
+                  accessibilityLabel={localizedTexts.searchAccessibilityLabel}
+                  clearButtonAccessibilityLabel={localizedTexts.clearSearch}
+                  placeholderTextColor={colors.searchElements}
+                  searchBarBorderRadius={searchBarBorderRadius}
+                  searchClearButtonBorderRadius={searchClearButtonBorderRadius}
+                  searchBoxStyle={[
+                    searchBoxStyle,
+                    isLandscape && { marginTop: searchTopMargin },
+                  ]}
+                  searchMaxLength={resolvedSearchMaxLength}
+                  searchTextStyle={searchTextStyle}
+                  searchValue={searchValue}
+                />
+              )}
+
+              <View style={[styles.pickerContentRow, { height: pickerHeight }]}>
+                {(Platform.OS === "android" || Platform.OS === "web") && (
+                  <View
+                    pointerEvents="none"
+                    style={[
+                      styles.selectionHighlight,
+                      {
+                        backgroundColor: colors.selectionHighlight,
+                        borderRadius: selectionHighlightBorderRadius,
+                        height: selectionHighlightHeight,
+                        marginTop: -selectionHighlightHeight / 2,
+                      },
+                    ]}
+                  />
+                )}
+                {resolvedHPadding !== undefined && resolvedHPadding > 0 && (
+                  <View
+                    style={[
+                      styles.horizontalPaddingSpacer,
+                      { minWidth: resolvedHPadding },
+                    ]}
+                  />
+                )}
+                <View style={styles.pickerColumnsContainer}>
+                  <PickerColumns
+                    columns={columns}
+                    selectedValues={selectedValues}
+                    itemStyle={resolvedItemStyle}
+                    itemTextColor={colors.pickerItemText}
+                    columnNavigationButtonsColor={
+                      colors.columnNavigationButtons
+                    }
+                    columnAccessibilityLabel={
+                      localizedTexts.columnAccessibilityLabel
+                    }
+                    previousOptionAccessibilityLabel={
+                      localizedTexts.previousOptionAccessibilityLabel
+                    }
+                    nextOptionAccessibilityLabel={
+                      localizedTexts.nextOptionAccessibilityLabel
+                    }
+                    onValueChanges={onValueChanges}
+                    pickerHeight={pickerHeight}
+                    isSingleColumn={isSingleColumn}
+                    showColumnNavigationButtons={navigationButtonsByColumn}
+                    reserveColumnNavigationButtonSpace={navigationButtonsByColumn.some(
+                      Boolean,
+                    )}
+                  />
+                </View>
+                {rightInfo && isSingleColumn && (
+                  <View style={styles.rightInfoContainer}>
+                    <Text
+                      style={[
+                        styles.rightInfoText,
+                        {
+                          color: colors.rightInfoText,
+                        },
+                        rightInfoTextStyle,
+                      ]}
+                    >
+                      {rightInfo}
+                    </Text>
+                  </View>
+                )}
+              </View>
+
+              {shouldShowBottomInlineButtons && (
+                <View
+                  style={[
+                    styles.bottomInlineButtonsContainer,
+                    {
+                      borderTopColor: dividerColor,
+                      minHeight: actionButtonHeight,
+                    },
+                  ]}
+                >
+                  {shouldShowCancelButton && (
+                    <TouchableOpacity
+                      style={[
+                        styles.buttonAlt,
+                        styles.bottomInlineActionButton,
+                        { minHeight: actionButtonHeight },
+                        cancelButtonContainerStyle,
+                      ]}
+                      onPress={handleCancel}
+                      accessibilityRole="button"
+                      accessibilityLabel={resolvedCancelButtonText}
+                    >
+                      <Text
+                        style={[
+                          styles.mainText,
+                          styles.buttonAltText,
+                          { color: colors.cancelText },
+                          cancelButtonTextStyle,
+                        ]}
+                      >
+                        {resolvedCancelButtonText}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  {shouldShowSubmitButton && (
+                    <TouchableOpacity
+                      style={[
+                        styles.buttonAlt,
+                        styles.bottomInlineActionButton,
+                        { minHeight: actionButtonHeight },
+                        submitButtonContainerStyle,
+                      ]}
+                      onPress={handleSubmit}
+                      accessibilityRole="button"
+                      accessibilityLabel={resolvedSubmitButtonText}
+                    >
+                      <Text
+                        style={[
+                          styles.mainText,
+                          styles.buttonAltText,
+                          { color: colors.buttonText },
+                          legacyAcceptButtonTextStyle,
+                          submitButtonTextStyle,
+                        ]}
+                      >
+                        {resolvedSubmitButtonText}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              )}
+
+              {shouldShowBottomSubmitButton && (
+                <TouchableOpacity
+                  style={[
+                    styles.buttonAlt,
+                    styles.acceptBtnAlt,
+                    { borderTopColor: dividerColor },
+                    { minHeight: actionButtonHeight },
+                    submitButtonContainerStyle,
+                  ]}
+                  onPress={handleSubmit}
+                  accessibilityRole="button"
+                  accessibilityLabel={resolvedSubmitButtonText}
+                >
+                  <Text
+                    style={[
+                      styles.mainText,
+                      styles.buttonAltText,
+                      { color: colors.buttonText },
+                      legacyAcceptButtonTextStyle,
+                      submitButtonTextStyle,
+                    ]}
+                  >
+                    {resolvedSubmitButtonText}
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
-          )}
-        </Animated.View>
-      </KeyboardAvoidingView>
-    </Modal>
+
+            {shouldShowDetachedCancelButton && (
+              <View
+                style={[
+                  styles.buttonAltView,
+                  {
+                    backgroundColor:
+                      cancelButtonBgColor ?? colors.modalBackground,
+                    borderRadius: actionButtonsBorderRadius,
+                    minHeight: actionButtonHeight,
+                    marginTop: cancelButtonContainerMarginTop,
+                  },
+                ]}
+              >
+                <TouchableOpacity
+                  style={[
+                    styles.buttonAlt,
+                    { minHeight: actionButtonHeight },
+                    cancelButtonContainerStyle,
+                  ]}
+                  onPress={handleCancel}
+                  accessibilityRole="button"
+                  accessibilityLabel={resolvedCancelButtonText}
+                >
+                  <Text
+                    style={[
+                      styles.mainText,
+                      styles.buttonAltText,
+                      { color: colors.cancelText },
+                      cancelButtonTextStyle,
+                    ]}
+                  >
+                    {resolvedCancelButtonText}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
+    </>
   );
 };
 

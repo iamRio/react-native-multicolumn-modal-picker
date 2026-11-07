@@ -23,6 +23,28 @@ The web demo is a quick way to try the picker in your browser. Its appearance an
 </p>
 <!-- markdownlint-enable MD033 -->
 
+## See it in action
+
+<!-- markdownlint-disable MD033 -->
+<p align="center">
+  <span style="display: inline-block; vertical-align: top; margin: 8px;">
+    <img src="https://img.shields.io/badge/ANDROID-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android" height="28" /><br/>
+    <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-android.gif" alt="Three-column picker running on Android" width="220" /><br/>
+    <sub>Three configurable columns</sub>
+  </span>
+  <span style="display: inline-block; vertical-align: top; margin: 8px;">
+    <img src="https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="iOS" height="28" /><br/>
+    <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-ios.gif" alt="Native iOS picker with search" width="220" /><br/>
+    <sub>Native picker with search</sub>
+  </span>
+  <span style="display: inline-block; vertical-align: top; margin: 8px;">
+    <img src="https://img.shields.io/badge/WEB-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Web" height="28" /><br/>
+    <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/picker-web.gif" alt="Two-column picker running in a web browser" width="220" /><br/>
+    <sub>Two columns in the browser</sub>
+  </span>
+</p>
+<!-- markdownlint-enable MD033 -->
+
 ## Requirements
 
 - React `>=18.2.0`
@@ -65,15 +87,6 @@ npx expo install @react-native-picker/picker
 ```
 
 `@react-native-picker/picker` is an optional peer dependency used for the native iOS picker columns. Android uses the package's built-in scrollable wheel and does not require this dependency.
-
-## Picker previews
-
-<!-- markdownlint-disable MD033 -->
-<p align="center">
-  <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/singleColumnSelector.gif" alt="Single-column picker" height="400" style="margin: 5px;"/>
-  <img src="https://raw.githubusercontent.com/iamRio/react-native-multicolumn-modal-picker/main/assets/singleColumnSelectorSearchBar.gif" alt="Single-column picker with search" height="400" style="margin: 5px;"/>
-</p>
-<!-- markdownlint-enable MD033 -->
 
 ## Usage
 
@@ -147,9 +160,9 @@ const TwoColumnsExample = () => {
 };
 ```
 
-`onClose` is called for both the submit and cancel flows. Tapping outside the picker follows the submit path, so it calls `onSubmit` (when provided) and then `onClose`; it does not call `onCancel`.
+`onClose` runs after either flow. Backdrop taps respect whether the picker requires explicit confirmation: when Submit is visible, a tap cancels, restores the values from when the modal opened, and calls `onCancel` (if provided) before `onClose`. When Submit is hidden, a tap submits instead, calling `onSubmit` (if provided) before `onClose`.
 
-The cancel button and the modal request-close event restore the values from when the modal opened, call `onCancel` (when provided), and then call `onClose`.
+The cancel button and the modal request-close event also restore the values from when the modal opened, call `onCancel` (if provided), and then call `onClose`.
 
 ### Destination search picker
 
@@ -245,39 +258,37 @@ TypeScript types are available for picker props, values, columns, locales, theme
 
 The table summarizes the available props, types, and defaults.
 
-| Category             | Prop                          | Type                                                                             | Default                    | Description                                                                                                                     |
-| -------------------- | ----------------------------- | -------------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| **Presentation**     | `visible`                     | `boolean`                                                                        | `required`                 | Controls modal visibility.                                                                                                      |
-| **Columns & values** | `columns`                     | `readonly [PickerColumn, PickerColumn?, PickerColumn?]`                          | `undefined`                | Full column set passed as a tuple.                                                                                              |
-|                      | `rightInfo`                   | `string`                                                                         | `undefined`                | Static text displayed to the right side of the picker columns.                                                                  |
-|                      | `selectedValues`              | `readonly [PickerValue \| null, (PickerValue \| null)?, (PickerValue \| null)?]` | `undefined`                | Selected values for all columns.                                                                                                |
-| **Content**          | `title`                       | `string`                                                                         | `undefined`                | Optional title shown above the picker.                                                                                          |
-| **Selection**        | `onValueChange`               | `(value: PickerValue \| null, columnIndex: number, index?: number) => void`      | `undefined`                | Called when a picker value changes.                                                                                             |
-| **Actions**          | `actionButtonsPosition`       | `ActionButtonsPosition`                                                          | `"none"`                   | Layout for action buttons: `"top"` inside the modal, `"bottom"` with submit inside and cancel below, or `"none"` to hide them.  |
-|                      | `cancelButtonText`            | `string`                                                                         | `undefined`                | Custom text for the cancel button. If omitted, the localized default applies.                                                   |
-|                      | `onCancel`                    | `() => void`                                                                     | `undefined`                | Called when the user cancels without submitting.                                                                                |
-|                      | `onClose`                     | `() => void`                                                                     | `required`                 | Called when the modal closes.                                                                                                   |
-|                      | `onSubmit`                    | `() => void`                                                                     | `undefined`                | Called when the user submits the current selection.                                                                             |
-|                      | `showCancelButton`            | `boolean`                                                                        | `true`                     | Shows or hides the cancel button in the selected layout.                                                                        |
-|                      | `showSubmitButton`            | `boolean`                                                                        | `true`                     | Shows or hides the submit button in the selected layout.                                                                        |
-|                      | `submitButtonText`            | `string`                                                                         | `undefined`                | Custom text for the submit button. If omitted, the localized default applies.                                                   |
-| **Search**           | `enableSearch`                | `boolean`                                                                        | `false`                    | Enables search in single-column mode.                                                                                           |
-|                      | `onSearchBlur`                | `() => void`                                                                     | `undefined`                | Called when the rendered search field loses focus. Only applies with search enabled and one active column.                      |
-|                      | `onSearchFocus`               | `() => void`                                                                     | `undefined`                | Called when the rendered search field receives focus. Only applies with search enabled and one active column.                   |
-|                      | `searchMaxLength`             | `number \| null`                                                                 | `30`                       | Maximum number of characters in the search field. Must be a positive integer; set to `null` for no limit.                       |
-|                      | `searchPlaceholder`           | `string`                                                                         | `undefined`                | Custom placeholder for the search field. If omitted, the localized default applies.                                             |
-| **Behavior**         | `showColumnNavigationButtons` | `boolean \| readonly [boolean?, boolean?, boolean?]`                             | automatic                  | Controls column navigation buttons on every platform. A boolean applies to all columns; a tuple overrides columns individually. |
-| **Localization**     | `locale`                      | `PickerLocale`                                                                   | device locale, then `"en"` | Localizes the built-in default texts when explicit overrides are not provided.                                                  |
-
-`actionButtonsPosition` accepts three current values:
-
-- `"top"` places enabled buttons inside the modal.
-- `"bottom"` shows submit inside the modal and cancel below it.
-- `"none"` hides both buttons.
+| Category             | Prop                          | Type                                                                             | Default                                | Description                                                                                                                                        |
+| -------------------- | ----------------------------- | -------------------------------------------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Presentation**     | `modalAnimationType`          | `"none" \| "slide" \| "fade"`                                                    | `"slide"`                              | Native transition for showing or hiding the picker.                                                                                                |
+|                      | `modalPosition`               | `"bottom" \| "center" \| "top"`                                                  | bottom on compact layouts; center wide | Positions the picker and its detached action button. The default is centered in landscape or when the shorter window dimension is at least 600 px. |
+|                      | `visible`                     | `boolean`                                                                        | `required`                             | Controls modal visibility.                                                                                                                         |
+| **Columns & values** | `columns`                     | `readonly [PickerColumn, PickerColumn?, PickerColumn?]`                          | `undefined`                            | Full column set passed as a tuple.                                                                                                                 |
+|                      | `rightInfo`                   | `string`                                                                         | `undefined`                            | Static text displayed to the right side of the picker columns.                                                                                     |
+|                      | `selectedValues`              | `readonly [PickerValue \| null, (PickerValue \| null)?, (PickerValue \| null)?]` | `undefined`                            | Selected values for all columns.                                                                                                                   |
+| **Content**          | `title`                       | `string`                                                                         | `undefined`                            | Optional title shown above the picker.                                                                                                             |
+| **Selection**        | `onValueChange`               | `(value: PickerValue \| null, columnIndex: number, index?: number) => void`      | `undefined`                            | Called when a picker value changes.                                                                                                                |
+| **Actions**          | `actionButtonsPosition`       | `ActionButtonsPosition`                                                          | `"none"`                               | `"bottom"` puts submit inside the modal and cancel below; `"bottomInline"` places both buttons in a row below the picker.                          |
+|                      | `cancelButtonText`            | `string`                                                                         | `undefined`                            | Custom text for the cancel button. If omitted, the localized default applies.                                                                      |
+|                      | `onCancel`                    | `() => void`                                                                     | `undefined`                            | Called when the user cancels without submitting.                                                                                                   |
+|                      | `onClose`                     | `() => void`                                                                     | `required`                             | Called when the modal closes.                                                                                                                      |
+|                      | `onSubmit`                    | `() => void`                                                                     | `undefined`                            | Called when the user submits the current selection.                                                                                                |
+|                      | `showCancelButton`            | `boolean`                                                                        | `true`                                 | Shows or hides the cancel button in the selected layout.                                                                                           |
+|                      | `showSubmitButton`            | `boolean`                                                                        | `true`                                 | Shows or hides the submit button in the selected layout.                                                                                           |
+|                      | `submitButtonText`            | `string`                                                                         | `undefined`                            | Custom text for the submit button. If omitted, the localized default applies.                                                                      |
+| **Search**           | `enableSearch`                | `boolean`                                                                        | `false`                                | Enables search in single-column mode.                                                                                                              |
+|                      | `onSearchBlur`                | `() => void`                                                                     | `undefined`                            | Called when the rendered search field loses focus. Only applies with search enabled and one active column.                                         |
+|                      | `onSearchFocus`               | `() => void`                                                                     | `undefined`                            | Called when the rendered search field receives focus. Only applies with search enabled and one active column.                                      |
+|                      | `searchMaxLength`             | `number \| null`                                                                 | `30`                                   | Maximum number of characters in the search field. Must be a positive integer; set to `null` for no limit.                                          |
+|                      | `searchPlaceholder`           | `string`                                                                         | `undefined`                            | Custom placeholder for the search field. If omitted, the localized default applies.                                                                |
+| **Behavior**         | `showColumnNavigationButtons` | `boolean \| readonly [boolean?, boolean?, boolean?]`                             | automatic                              | Controls column navigation buttons on every platform. A boolean applies to all columns; a tuple overrides columns individually.                    |
+| **Localization**     | `locale`                      | `PickerLocale`                                                                   | device locale, then `"en"`             | Localizes the built-in default texts when explicit overrides are not provided.                                                                     |
 
 Set `showSubmitButton` or `showCancelButton` to `false` to hide either action. To show only the cancel button below the modal, use `actionButtonsPosition="bottom"` with `showSubmitButton={false}`.
 
-When no submit button is rendered, choosing an item in a single-column picker submits the selection and closes the modal automatically. With multiple columns, the picker stays open so the user can finish changing values; tapping the backdrop submits the current selection, while the device back action cancels and restores the values from when the modal opened. These close behaviors also apply when the corresponding action button is hidden.
+When no submit button is rendered, choosing an item in a single-column picker submits the selection and closes the modal automatically. With multiple columns, the picker stays open so the user can finish changing values; tapping the backdrop submits the current selection. When the submit button is rendered, tapping the backdrop cancels and restores values from when the modal opened. The device back action also cancels and restores the initial values.
+
+The modal transition applies to the whole modal window; the backdrop follows `"slide"` and `"fade"` or appears immediately with `"none"`. If a focused search field causes keyboard flicker during a transition, use `modalAnimationType="none"`.
 
 By default, column navigation buttons are shown only on non-touch Web devices and hidden on native platforms. Set `showColumnNavigationButtons` to `true` or `false` to show or hide them on every platform, or pass a tuple such as `[true, false]` to control columns independently. Unspecified tuple slots use the default behavior.
 
@@ -311,27 +322,31 @@ The Android wheel shows a selected-row highlight. Set `selectionHighlight` in `c
 
 The following props are still supported for compatibility and should be replaced in new code. They remain available to avoid breaking existing integrations and are expected to be removed in a future major version.
 
-| Deprecated prop/value            | Deprecated since | Replace with                                                  | Notes                                                                        |
-| -------------------------------- | ---------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `acceptButtonText`               | `1.2.0`          | `submitButtonText`                                            | Kept for backward compatibility.                                             |
-| `acceptButtonTextStyle`          | `1.2.0`          | `submitButtonTextStyle`                                       | Kept for backward compatibility.                                             |
-| `actionButtons`                  | `1.1.1`          | `actionButtonsPosition`                                       | Kept for backward compatibility.                                             |
-| `actionButtonsBorderColor`       | `1.1.0`          | `customColorScheme`                                           | Legacy color alias; prefer the palette override model.                       |
-| `actionButtonsPosition="cancel"` | `1.2.0`          | `actionButtonsPosition="bottom"` + `showSubmitButton={false}` | Kept for backward compatibility; shows only cancel unless submit is enabled. |
-| `bgColor`                        | `1.1.0`          | `customColorScheme`                                           | Legacy color alias; prefer the palette override model.                       |
-| `cancelButtonBgColor`            | `1.1.0`          | `customColorScheme`                                           | Legacy color alias; prefer the palette override model.                       |
-| `hPadding`                       | `1.1.0`          | `horizontalPadding`                                           | Kept for backward compatibility.                                             |
-| `onAccept`                       | `1.2.0`          | `onSubmit`                                                    | Kept for backward compatibility.                                             |
-| `onValueChange1`                 | `1.1.1`          | `onValueChange`                                               | Kept for backward compatibility.                                             |
-| `onValueChange2`                 | `1.1.1`          | `onValueChange`                                               | Kept for backward compatibility.                                             |
-| `onValueChange3`                 | `1.1.1`          | `onValueChange`                                               | Kept for backward compatibility.                                             |
-| `onValuesChange`                 | `1.1.1`          | `onValueChange`                                               | Kept for backward compatibility.                                             |
-| `pickerItemTextStyle`            | Not specified    | `itemStyle`                                                   | Deprecated alias for item label styling; use `itemStyle` in new code.        |
-| `searchBar`                      | `1.1.0`          | `enableSearch`                                                | Kept for backward compatibility.                                             |
-| `searchElementsColor`            | `1.1.0`          | `customColorScheme`                                           | Legacy color alias; prefer the palette override model.                       |
-| `selectionHighlightColor`        | `1.1.0`          | `customColorScheme`                                           | Legacy color override for the Android selected-row highlight.                |
+| Deprecated prop/value                                | Deprecated since | Replace with                                                  | Notes                                                                                               |
+| ---------------------------------------------------- | ---------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `acceptButtonText`                                   | `1.2.0`          | `submitButtonText`                                            | Kept for backward compatibility.                                                                    |
+| `acceptButtonTextStyle`                              | `1.2.0`          | `submitButtonTextStyle`                                       | Kept for backward compatibility.                                                                    |
+| `actionButtons`                                      | `1.1.1`          | `actionButtonsPosition`                                       | Kept for backward compatibility.                                                                    |
+| `actionButtonsBorderColor`                           | `1.1.0`          | `customColorScheme`                                           | Legacy color alias; prefer the palette override model.                                              |
+| `actionButtonsPosition="cancel"`                     | `1.2.0`          | `actionButtonsPosition="bottom"` + `showSubmitButton={false}` | Kept for backward compatibility; shows only cancel unless submit is enabled.                        |
+| `bgColor`                                            | `1.1.0`          | `customColorScheme`                                           | Legacy color alias; prefer the palette override model.                                              |
+| `cancelButtonBgColor`                                | `1.1.0`          | `customColorScheme`                                           | Legacy color alias; prefer the palette override model.                                              |
+| `column1`, `column2`, `column3`                      | `1.1.1`          | `columns`                                                     | Each legacy prop fills its corresponding slot only when that slot in `columns` is undefined.        |
+| `hPadding`                                           | `1.1.0`          | `horizontalPadding`                                           | Kept for backward compatibility.                                                                    |
+| `onAccept`                                           | `1.2.0`          | `onSubmit`                                                    | Kept for backward compatibility.                                                                    |
+| `onValueChange1`                                     | `1.1.1`          | `onValueChange`                                               | Kept for backward compatibility.                                                                    |
+| `onValueChange2`                                     | `1.1.1`          | `onValueChange`                                               | Kept for backward compatibility.                                                                    |
+| `onValueChange3`                                     | `1.1.1`          | `onValueChange`                                               | Kept for backward compatibility.                                                                    |
+| `onValuesChange`                                     | `1.1.1`          | `onValueChange`                                               | Kept for backward compatibility.                                                                    |
+| `pickerItemTextStyle`                                | `1.1.1`          | `itemStyle`                                                   | Deprecated alias for item label styling; use `itemStyle` in new code.                               |
+| `searchBar`                                          | `1.1.0`          | `enableSearch`                                                | Kept for backward compatibility.                                                                    |
+| `searchElementsColor`                                | `1.1.0`          | `customColorScheme`                                           | Legacy color alias; prefer the palette override model.                                              |
+| `selectionHighlightColor`                            | `1.1.0`          | `customColorScheme`                                           | Legacy color override for the Android selected-row highlight.                                       |
+| `selectedValue1`, `selectedValue2`, `selectedValue3` | `1.1.1`          | `selectedValues`                                              | Each legacy prop fills its corresponding slot only when that slot in `selectedValues` is undefined. |
 
 The deprecated button text and style props remain supported when their `submit` equivalents are omitted. If both versions of a text or style prop are provided, the `submit` prop takes precedence. If both `onAccept` and `onSubmit` are provided, only `onSubmit` is called.
+
+The `children` prop is retained for compatibility but is not rendered by the current picker layout.
 
 ### Search behavior
 
@@ -369,11 +384,11 @@ The built-in locales are defaults, not a limitation. If your app already uses an
 
 ## Tests and coverage
 
-Run the unit tests with `npm test`. Run them with coverage using `npm run test:coverage`; this writes an LCOV report to `coverage/lcov.info`. Coverage includes all executable code under `src` and enforces 100% statements, branches, functions, and lines; type-only declarations are excluded because they produce no runtime code. CI runs formatting checks, type checking, linting, and tests with coverage on every push and pull request, then uploads the LCOV report to Codecov. To require these checks before merging, protect the `main` branch and require the `validate` status check.
+Run the unit tests with `npm test`. Run them with coverage using `npm run test:coverage`; this writes an LCOV report to `coverage/lcov.info`. Coverage includes all executable code under `src` and enforces 100% statements, branches, functions, and lines; type-only declarations are excluded because they produce no runtime code. CI runs formatting checks, type checking, linting, and tests with coverage on every push and pull request. It uploads the LCOV report to Codecov on pushes and same-repository pull requests; fork pull requests skip the upload. To require these checks before merging, protect the `main` branch and require the `validate` status check.
 
 ### Theme and custom color schemes
 
-`theme` selects the palette mode. If omitted, the picker follows the device's light or dark setting; `"auto"` does the same explicitly. In `customColorScheme`, include only the colors you want to change; other colors keep their built-in values.
+`theme` selects the palette mode. If omitted, the picker follows the device's light or dark setting; `"auto"` does the same explicitly. In `customColorScheme`, include only the colors to change; other colors keep their built-in values. The optional `divider` color controls separator lines, defaults to `border`, and accepts `"transparent"`.
 
 Use the `light` and `dark` entries to customize each mode independently. To share brand colors across modes, define a named theme (for example, `"brand"`) and select it with `theme`. Named theme colors override matching colors in the active light or dark palette.
 

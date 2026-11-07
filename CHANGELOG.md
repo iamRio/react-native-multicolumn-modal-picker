@@ -1,8 +1,25 @@
 # Changelog
 
+## [1.3.0] - 2026-11-07
+
+### Added (1.3.0)
+
+- Added `modalPosition` to control whether the picker opens at the top, center, or bottom, while preserving its responsive default placement.
+- Added `modalAnimationType` to choose the native `none`, `slide`, or `fade` transition. The detached backdrop fades with `slide` and `fade`, and appears or disappears immediately with `none`.
+- Added the `"bottomInline"` value to the `actionButtonsPosition` prop to place the cancel and submit actions together below the picker content with a theme-colored divider.
+- Added the optional `divider` palette color for separator lines. It defaults to the resolved `border` color and accepts `"transparent"` to hide dividers.
+
+### Changed (1.3.0)
+
+- Backdrop taps now cancel when Submit is visible and submit when it is hidden, aligning dismissal with whether explicit confirmation is available.
+
+### Fixed (1.3.0)
+
+- Fixed Android flicker and keyboard movement out of sync with the picker when dismissing the single-column search modal while its search field was focused.
+
 ## [1.2.1] - 2026-10-31
 
-### Changed
+### Changed (1.2.1)
 
 - Expanded screen reader support across Android, iOS, and Web with localized labels in all supported languages for picker columns, navigation controls, search input, and the clear-search button.
 
@@ -159,16 +176,16 @@ Legacy aliases from 1.0.x remain supported as deprecated compatibility shims. Ne
 
 ## [1.0.4] - 2023-10-22
 
+### Added (1.0.4)
+
+- Implemented the search bar in the selector. See the [current README](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/README.md) for the current search API.
+- Added search and styling properties for the selector.
+
 ### Changed (1.0.4)
 
 - Limited package use to `iOS` only. This decision was made to prevent potential errors and dissatisfaction for developers using the package for `Android` applications. For more details see the [README](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/README.md).
 - Discontinued support for versions prior to `1.0.4`. Developers are encouraged to update to the latest version. Thanks for understanding.
 - Important performance adjustments and minor corrections.
-
-### Added (1.0.4)
-
-- Implemented the search bar in the selector. See the [current README](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/README.md) for the current search API.
-- Added search and styling properties for the selector.
 
 ### Changed (1.0.4) - naming updates
 

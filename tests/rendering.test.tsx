@@ -17,8 +17,8 @@ describe("React Native component rendering", () => {
     });
 
     expect(screen.getByText("Choose a plan")).toBeTruthy();
-    expect(screen.getAllByLabelText("Accept")[1]).toBeTruthy();
-    expect(screen.getByLabelText("Cancel")).toBeTruthy();
+    expect(screen.getAllByLabelText("Accept")[0]).toBeTruthy();
+    expect(screen.getAllByLabelText("Cancel")[1]).toBeTruthy();
     expect(screen.getByLabelText("Column 1")).toBeTruthy();
   });
 });

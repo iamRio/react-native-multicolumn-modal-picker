@@ -4,3 +4,5 @@ dist/
 coverage/
 *.tgz
 /RELEASE-LOCAL.md
+/GIF-WORKFLOW-LOCAL.md
+/MAJOR-RELEASE-README.md

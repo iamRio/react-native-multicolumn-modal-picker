@@ -57,7 +57,7 @@ export const resolvePalette = ({
   customColorScheme,
   colorScheme,
   legacyColorOverrides,
-}: ResolvePaletteOptions): PickerPalette => {
+}: ResolvePaletteOptions): PickerPalette & { divider: string } => {
   const resolvedThemeName: string =
     theme === "auto"
       ? colorScheme === "dark"
@@ -80,7 +80,7 @@ export const resolvePalette = ({
 
   const basePalette: BasePalette = Colors[basePaletteName];
 
-  return {
+  const resolvedPalette = {
     ...basePalette,
     searchElements: Colors.searchElements,
     cancelText: Colors.cancelText,
@@ -88,4 +88,9 @@ export const resolvePalette = ({
     ...omitUndefined(baseThemeOverrides),
     ...omitUndefined(namedThemeOverrides),
   } satisfies ThemePalette;
+
+  return {
+    ...resolvedPalette,
+    divider: resolvedPalette.divider ?? resolvedPalette.border,
+  };
 };

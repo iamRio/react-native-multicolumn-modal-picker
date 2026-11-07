@@ -70,4 +70,27 @@ describe("resolvePalette", () => {
     expect(palette.modalBackground).toBe("custom");
     expect(palette.border).toBe("legacy-border");
   });
+
+  it("defaults the divider color to the resolved border color", () => {
+    const palette = resolvePalette({
+      theme: "light",
+      customColorScheme: {
+        light: { border: "custom-border" },
+      },
+    });
+
+    expect(palette.divider).toBe("custom-border");
+  });
+
+  it("allows a transparent divider without changing other border colors", () => {
+    const palette = resolvePalette({
+      theme: "light",
+      customColorScheme: {
+        light: { border: "custom-border", divider: "transparent" },
+      },
+    });
+
+    expect(palette.border).toBe("custom-border");
+    expect(palette.divider).toBe("transparent");
+  });
 });

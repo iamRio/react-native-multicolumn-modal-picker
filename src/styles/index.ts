@@ -88,6 +88,20 @@ export const styles = StyleSheet.create({
     minHeight: pickerTokens.layout.actionButtonMinHeight,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
+  bottomInlineButtonsContainer: {
+    minHeight: pickerTokens.layout.actionButtonMinHeight,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: pickerTokens.spacing.md,
+    marginTop: pickerTokens.spacing.xl,
+    paddingHorizontal: pickerTokens.spacing.md,
+    paddingVertical: pickerTokens.spacing.lg,
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  bottomInlineActionButton: {
+    flex: 1,
+  },
   titleView: {
     alignSelf: "center",
     paddingVertical: pickerTokens.layout.titleVerticalPadding,

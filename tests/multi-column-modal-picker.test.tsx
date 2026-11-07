@@ -32,7 +32,7 @@ describe("MultiColumnModalPicker", () => {
       createProps({ actionButtonsPosition: "top", onSubmit, onClose }),
     );
 
-    await fireEvent.press(screen.getAllByLabelText("Accept")[1]);
+    await fireEvent.press(screen.getAllByLabelText("Accept")[0]);
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -50,7 +50,7 @@ describe("MultiColumnModalPicker", () => {
       }),
     );
 
-    await fireEvent.press(screen.getAllByLabelText("Continue")[1]);
+    await fireEvent.press(screen.getAllByLabelText("Continue")[0]);
 
     expect(onAccept).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -69,7 +69,7 @@ describe("MultiColumnModalPicker", () => {
       }),
     );
 
-    await fireEvent.press(screen.getAllByLabelText("Submit plan")[1]);
+    await fireEvent.press(screen.getAllByLabelText("Submit plan")[0]);
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(onAccept).not.toHaveBeenCalled();
@@ -78,9 +78,31 @@ describe("MultiColumnModalPicker", () => {
   it("renders bottom and detached action buttons", async () => {
     await renderPicker(createProps({ actionButtonsPosition: "bottom" }));
 
-    expect(screen.getAllByLabelText("Accept")).toHaveLength(2);
-    expect(screen.getAllByLabelText("Cancel")).toHaveLength(1);
-    await fireEvent.press(screen.getAllByLabelText("Accept")[1]);
+    expect(screen.getAllByLabelText("Accept")).toHaveLength(1);
+    expect(screen.getAllByLabelText("Cancel")).toHaveLength(2);
+    await fireEvent.press(screen.getAllByLabelText("Accept")[0]);
+  });
+
+  it("submits and cancels from the bottom inline action row", async () => {
+    const onCancel = jest.fn();
+    const onSubmit = jest.fn();
+    const onClose = jest.fn();
+    await renderPicker(
+      createProps({
+        actionButtonsPosition: "bottomInline",
+        onCancel,
+        onSubmit,
+        onClose,
+      }),
+    );
+
+    await fireEvent.press(screen.getAllByLabelText("Cancel")[1]);
+    expect(onCancel).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledTimes(1);
+
+    await fireEvent.press(screen.getAllByLabelText("Accept")[0]);
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledTimes(2);
   });
 
   it("supports the deprecated cancel-only action position", async () => {
@@ -108,15 +130,62 @@ describe("MultiColumnModalPicker", () => {
     expect(screen.queryByText("Cancel")).toBeNull();
   });
 
-  it("submits when the backdrop is pressed", async () => {
+  it("submits from the backdrop when the submit button is not rendered", async () => {
     const onSubmit = jest.fn();
     const onClose = jest.fn();
-    await renderPicker(createProps({ onSubmit, onClose }));
+    const onCancel = jest.fn();
+    await renderPicker(createProps({ onSubmit, onCancel, onClose }));
 
     await fireEvent.press(screen.getAllByLabelText("Accept")[0]);
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onCancel).not.toHaveBeenCalled();
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("submits from the backdrop when showSubmitButton hides the action", async () => {
+    const onSubmit = jest.fn();
+    const onCancel = jest.fn();
+    const onClose = jest.fn();
+    await renderPicker(
+      createProps({
+        actionButtonsPosition: "bottomInline",
+        showSubmitButton: false,
+        onSubmit,
+        onCancel,
+        onClose,
+      }),
+    );
+
+    await fireEvent.press(screen.getByLabelText("Accept"));
+
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onCancel).not.toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("cancels from the backdrop when the submit button is rendered", async () => {
+    const onValueChange = jest.fn();
+    const onSubmit = jest.fn();
+    const onCancel = jest.fn();
+    const onClose = jest.fn();
+    const props = createProps({
+      actionButtonsPosition: "bottomInline",
+      onValueChange,
+      onSubmit,
+      onCancel,
+      onClose,
+    });
+    const result = await renderPicker(props);
+    await fireEvent(screen.getByLabelText("Column 1"), "valueChange", "pro", 1);
+    await result.rerender(pickerElement({ ...props, selectedValues: ["pro"] }));
+
+    await fireEvent.press(screen.getAllByLabelText("Cancel")[0]);
+
+    expect(onCancel).toHaveBeenCalledTimes(1);
+    expect(onSubmit).not.toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onValueChange).toHaveBeenLastCalledWith("basic", 0);
   });
 
   it("cancels, restores changed controlled values, and calls close handlers", async () => {
@@ -139,7 +208,7 @@ describe("MultiColumnModalPicker", () => {
     await fireEvent(picker, "valueChange", "pro", 1);
     await result.rerender(pickerElement({ ...props, selectedValues: ["pro"] }));
 
-    await fireEvent.press(screen.getByLabelText("Cancel"));
+    await fireEvent.press(screen.getAllByLabelText("Cancel")[1]);
 
     expect(onCancel).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -294,7 +363,7 @@ describe("MultiColumnModalPicker", () => {
 
     await fireEvent(input, "focus");
     await fireEvent(input, "blur");
-    await fireEvent.press(screen.getAllByLabelText("Accept")[1]);
+    await fireEvent.press(screen.getAllByLabelText("Accept")[0]);
 
     expect(onSearchBlur).toHaveBeenCalledTimes(1);
     expect(onSubmit).toHaveBeenCalledTimes(1);
@@ -314,7 +383,7 @@ describe("MultiColumnModalPicker", () => {
     const input = screen.getByLabelText("Search options");
     await fireEvent(input, "focus");
     await fireEvent(input, "blur");
-    await fireEvent.press(screen.getByLabelText("Cancel"));
+    await fireEvent.press(screen.getAllByLabelText("Cancel")[1]);
 
     expect(onSearchBlur).toHaveBeenCalledTimes(1);
     expect(onCancel).toHaveBeenCalledTimes(1);
