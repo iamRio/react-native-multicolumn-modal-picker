@@ -74,19 +74,19 @@ The web demo is a quick way to try the picker in your browser. Its appearance an
 
 ## Installation
 
-```bash
-npm install react-native-multicolumn-modal-picker
-```
+Choose the command for the package manager used by your project:
 
-or:
+| npm                                                 | pnpm                                             | Yarn                                             | Bun                                             |
+| --------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------- |
+| `npm install react-native-multicolumn-modal-picker` | `pnpm add react-native-multicolumn-modal-picker` | `yarn add react-native-multicolumn-modal-picker` | `bun add react-native-multicolumn-modal-picker` |
 
-```bash
-yarn add react-native-multicolumn-modal-picker
-```
+The package is published on npm and works with every npm-compatible package manager. Use your project's existing package manager consistently.
 
 ### For Expo projects
 
 The package supports Expo SDK 49 and later, including SDK 58. This applies only to Expo projects; bare React Native projects do not require Expo.
+
+For Expo projects, use the Expo CLI so it can resolve compatible native dependency versions:
 
 ```bash
 npx expo install react-native-multicolumn-modal-picker react-native-safe-area-context
@@ -415,6 +415,9 @@ See the [changelog](https://github.com/iamRio/react-native-multicolumn-modal-pic
 ## Feedback
 
 Please open an [issue](https://github.com/iamRio/react-native-multicolumn-modal-picker/issues) or join the [discussion](https://github.com/iamRio/react-native-multicolumn-modal-picker/discussions/1).
+
+For contribution guidance, see [CONTRIBUTING.md](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/CONTRIBUTING.md)
+and the project's [Code of Conduct](https://github.com/iamRio/react-native-multicolumn-modal-picker/blob/main/CODE_OF_CONDUCT.md).
 
 ## Author
 

@@ -2,12 +2,12 @@
 
 ## Supported Versions
 
-Security updates are provided for the latest release in the 1.2.x line.
+Security updates are provided for the latest release in the 1.3.x line.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.2.x   | :white_check_mark: |
-| < 1.2   | :x:                |
+| 1.3.x   | :white_check_mark: |
+| < 1.3   | :x:                |
 
 Please upgrade to the latest supported release before reporting an issue when possible.
 
